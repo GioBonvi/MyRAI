@@ -6,15 +6,75 @@ body {
     border: 1em solid black;
     border-radius: 0.5em;
     
-    overflow-y: hidden;
-    overflow-x: scroll;
+    overflow: auto;
+}
+
+#wall-container #channels .wall-ch-logo {
+    margin: 0.7em;
+}
+
+.wall-hour {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.wall-hour-divider {
+    border: gray solid 0.5px;
+    border-left: 0;
+    border-right: 0;
+    border-radius: 1 em;
+    
+    display: flex;
+    justify-content: space-around;
 }
 
 .wall-ch {
     display: flex;
-    width: 100%;
-    height: 8em;
+    flex-direction: column;
+    width: 8em;
+    height: 100%;
+    margin: 0.7em;
 }
+
+img.wall-ch-logo {
+    width: 8em;
+    height: auto;
+}
+
+.wall-ch > .wall-prg {
+    width: 100%;
+    overflow: hidden;
+}
+
+.wall-prg > .wall-prg-img{
+    width: 100%;
+    margin: 0;
+    display: block;
+}
+
+.wall-prg-img > img {
+    width: 100%;
+    height: auto;
+}
+
+.wall-prg > .wall-prg-content{
+    width: 100%;
+    padding: 0.3em 0.7em;
+    display: block;
+    font-size: 0.9em;
+}
+
+.wall-prg-content > span.titolo {
+    font-weight: bold;
+}
+
+.wall-prg-content > span.genere {
+    font-style: italic;
+}
+
+
+/*
 
 .wall-ch > .wall-prg {
     min-width: 6em;
@@ -60,6 +120,8 @@ body {
 .wall-prg-content a {
     vertical-align: top;
 } 
+
+*/
 
 /*COLORI CANALI*/
 .wall-ch[data-ch="RaiUno"] > .wall-prg {

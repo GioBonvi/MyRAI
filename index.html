@@ -45,7 +45,7 @@ function getChannelData(ch, data)
                 
                 // Primo programma fake (necessario per contare la durata).
                 prg = new Object();
-                prg.ora = "06:00";
+                prg.inizio = "360";
                 prg.titolo = "Start";
                 channelData.list.push(prg);
                 
@@ -53,7 +53,9 @@ function getChannelData(ch, data)
                 {
                     val = $(val);
                     prg = new Object();
-                    prg.ora = $(".ora", val).html();
+                    var inizio = $(".ora", val).html();
+                    inizio = (parseInt(inizio[0]) * 10 + parseInt(inizio[1])) * 60 + parseInt(inizio[3]) * 10 + parseInt(inizio[4]);
+                    prg.inizio = inizio;
                     prg.link = $(".info a", val).attr("href");
                     prg.titolo = $(".info a", val).html();
                     prg.id = $(".info a", val).attr("idprogramma");
@@ -62,20 +64,25 @@ function getChannelData(ch, data)
                     prg.immagine = $("div.eventDescription", val).attr("data-immagine");
                     prg.immagine = prg.immagine == "" ? "img/" + ch + "_100.jpg" : prg.immagine;
                     
-                    // La durata serve per dare la lunghezza delle barre.
+                    // La durata serve per dare l'altezza delle barre.
                     var lastPrg = channelData.list[channelData.list.length - 1];
-                    lastPrg.durata = getDiff(lastPrg.ora, prg.ora);
+                    prg.durata = getDiff(lastPrg.inizio, prg.inizio);
                     // Possono comparire programmi dupicati per errore.
-                    if (lastPrg.durata == 0)
+                    if (lastPrg.inizio == prg.inizio && lastPrg.id == prg.id)
                     {
                         // Rimuovi il vecchio.
                         channelData.list.pop();
                     }
-                    
+                    // Alcune volte il programma è segnato alle 6:00, ma è alla fine della giornata e non all'inizio.
+                    // Per evitarre dubbi viene spostato alle 5:59.
+                    if (prg.inizio == 360 && lastPrg.inizio < 360)
+                    {
+                        // Rimuovi il vecchio.
+                        prg.inizio = prg.inizio - 1;
+                    }
+                    // Aggiungi il nuovo programma.
                     channelData.list.push(prg);
                 });
-                
-                channelData.list.push(prg);
                 
                 //DEBUG
                 console.log(channelData);
@@ -85,10 +92,8 @@ function getChannelData(ch, data)
     return channelData;
 }
 
-function getDiff(oraPrima, oraDopo) {
-    // Converti le ore in minuti.
-    oraPrima = (parseInt(oraPrima[0]) * 10 + parseInt(oraPrima[1])) * 60 + parseInt(oraPrima[3]) * 10 + parseInt(oraPrima[4]);
-    oraDopo = (parseInt(oraDopo[0]) * 10 + parseInt(oraDopo[1])) * 60 + parseInt(oraDopo[3]) * 10 + parseInt(oraDopo[4]);
+function getDiff(oraPrima, oraDopo)
+{
     if (oraDopo >= oraPrima)
     {
         // Ore regolari.
@@ -96,26 +101,96 @@ function getDiff(oraPrima, oraDopo) {
     }
     else
     {
-        console.log(oraPrima + " - " + oraDopo);
         // A cavallo della mezzanotte.
         return (24*60 - oraPrima + oraDopo);
     }
 } 
+
+function minutiToOre(total)
+{
+    var ore = Math.floor(total/60);
+    ore = ore < 9 ? '0' + ore : ore;
+    var minuti = total % 60;
+    minuti = minuti < 9 ? '0' + minuti : minuti;
+    
+    return (ore + ":" + minuti);
+}
 </script>
 
+<main>
 
-<div class="container">
-
-<!-- WallList -->
+<!-- Modalità Wall -->
 <div id="wall-container">
+    <div id="channels">
+    </div>
     
 </div>
 
-<div id="test">
-</div>
-
+</main>
 
 <script>
+
+for (var i = 360; i <= 1380; i = i + 60)
+{
+    $("#wall-container").append('<div class="wall-hour-divider"><span>' + minutiToOre(i) + '</span><span>' + minutiToOre(i) + '</span><span>' + minutiToOre(i) + '</span></div>').append('<div class="wall-hour" data-start="' + i + '"></div>');
+}
+for (var i = 0; i < 360; i = i + 60)
+{
+    $("#wall-container").append('<div class="wall-hour-divider"><span>' + minutiToOre(i) + '</span><span>' + minutiToOre(i) + '</span><span>' + minutiToOre(i) + '</span></div>').append('<div class="wall-hour" data-start="' + i + '"></div>');
+}
+
+
+var em_min = 0.7; // Ogni minuto di trasmissione corrisponde a tot em di altezza.
+var channels = ["RaiUno", "RaiDue", "RaiTre", "Rai4" ,"Extra"];
+for (ch of channels)
+{
+    $("#wall-container #channels").append('<img class="wall-ch-logo card" src="img/' + ch + '_100.jpg">');
+    $(".wall-hour").append('<div class="wall-ch" data-ch="' + ch + '"></div>');
+    var chData = getChannelData(ch, "2016_02_06");
+    for (var i = 1; i < chData.list.length; i = i + 1)
+    {
+        var prg = chData.list[i];
+        
+        // Se il programma dura troppo poco l'immagine viene nascosta per fare spaizo al testo.
+        var divImg = divImg = $('<div class="wall-prg-img"></div>').append('<img src="' + prg.immagine + '" ' + ((prg.durata * em_min) < 10 ? "hidden" : "") + '>');
+        
+        // Se il link non esiste la variabile è 'undefined'.
+        var link = (typeof prg.link === 'undefined') ? "" :prg.link.replace("http://", "");
+        var titolo = '<span class="titolo"><a ' + (link != "" ? 'href="http://' + link + '" target="_blank"' : "") + '>' + prg.titolo + '</a></span>';
+        
+        var genere = "";
+        if (prg.macrogenere != "" && prg.genere != "")
+        {
+            if (prg.macrogenere != prg.genere)
+            {
+                genere = prg.macrogenere + " - " + prg.genere;
+            }
+            else 
+            {
+                genere = prg.genere;
+            }
+        }
+        else if (prg.macrogenere != "")
+        {
+            genere = prg.macrogenere;
+        }
+        else if (prg.genere != "")
+        {
+            genere = prg.genere;
+        }
+        if(genere != "")
+        {
+            genere = '<span class="genere">' + genere + '</span>';
+        }
+        
+        var inizio = '<span class="inizio">' + minutiToOre(prg.inizio) + '</span>';
+        var divContent = $('<div class="wall-prg-content"></div>').append(titolo).append("<br>").append(genere).append("<br>").append(inizio);
+        var prgDiv = $('<div class="wall-prg card z-depth-3" style="min-height:' + prg.durata * em_min + 'em"></div>').append(divImg).append(divContent);
+        $('.wall-hour[data-start="' + Math.floor(prg.inizio / 60) * 60 + '"] .wall-ch[data-ch="' + ch + '"]').append(prgDiv);
+    }
+}
+
+/*
 var em_min = 0.8; // Ogni minuto di trasmissione corrisponde a tot em di larghezza.
 var channels = ["RaiUno", "RaiDue", "RaiTre", "Rai4" ,"Extra"];
 for (ch of channels)
@@ -166,9 +241,8 @@ for (ch of channels)
 }
 
 console.log(getDiff("12:45", "13:10"));
+*/
 </script>
 
-
-</div>
 </body>
 </html>
