@@ -14,8 +14,10 @@ body {
 }
 
 .wall-hour {
-    display: flex;
-    flex-direction: row;
+    display: -webkit-box;  /* OLD - iOS 6-, Safari 3.1-6, BB7 */
+    display: -ms-flexbox;  /* TWEENER - IE 10 */
+    display: -webkit-flex; /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
+    display: flex
     width: 100%;
 }
 
@@ -25,12 +27,26 @@ body {
     border-right: 0;
     border-radius: 1 em;
     
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -moz-flexbox;
+    display: -webkit-flex;
     display: flex;
+    -webkit-justify-content: space-around;
+    -ms-justify-content: space-around;
+    -moz-justify-content: space-around;
     justify-content: space-around;
 }
 
 .wall-ch {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -moz-flexbox;
+    display: -webkit-flex;
     display: flex;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    -moz-flex-direction: column;
     flex-direction: column;
     width: 8em;
     height: 100%;
@@ -74,69 +90,20 @@ img.wall-ch-logo {
 }
 
 #modal-img {
-	display: inline-block;
-	width: 100px;
-	height: 100px;
+    display: inline-block;
+    width: 100px;
+    height: 100px;
 }
 
 #modal-descrizione {
-	display: inline-block;
-	width: calc(100% - 120px);
-	vertical-align: top;
+    display: inline-block;
+    width: calc(100% - 120px);
+    vertical-align: top;
 }
 
 #modal-descrizione > .solotesto {
-	display: none;
+    display: none;
 }
-
-/*
-
-.wall-ch > .wall-prg {
-    min-width: 6em;
-    margin: 0.5em;
-    flex: 1 0 auto;
-    height: 6em;
-    
-    overflow: hidden;
-}
-
-.wall-prg > .wall-prg-img{
-    height: 100%;
-    display: inline-block;
-    vertical-align: top;
-}
-
-.wall-prg-img > img {
-    height: 100%;
-    width: auto;
-}
-
-.wall-prg > .wall-prg-content {
-    height: 100%;
-    width: calc(100% - 120px);
-    display: inline-block;
-    vertical-align: top;
-    padding: 0.5em;
-    overflow: hidden;
-}
-
-.wall-prg-content > span {
-    vertical-align: top;
-    width: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.wall-prg-content > .genere {
-    font-style: italic;
-}
-
-.wall-prg-content a {
-    vertical-align: top;
-} 
-
-*/
 
 /*COLORI CANALI*/
 .wall-ch[data-ch="RaiUno"] > .wall-prg {

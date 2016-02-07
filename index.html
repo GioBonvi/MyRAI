@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-	<meta charset="UTF-8">
-	<title>Programmazione RAI</title>
-	<meta name="author" content="Giorgio Bonvicini">
+    <meta charset="UTF-8">
+    <title>Programmazione RAI</title>
+    <meta name="author" content="Giorgio Bonvicini">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="stylesheet" href="http://fonts.googleapis.com/icon?family=Material+Icons">
@@ -60,25 +60,25 @@ function getChannelData(ch, data)
                     prg.macrogenere = $("div.eventDescription", val).attr("data-macrogenere").toLowerCase();
                     prg.descrizione = $("div.eventDescription", val).html();
                     var prettygenere = "";
-					if (prg.macrogenere != "" && prg.genere != "")
-					{
-						if (prg.macrogenere != prg.genere)
-						{
-						    prettygenere = prg.macrogenere + " - " + prg.genere;
-						}
-						else 
-						{
-						    prettygenere = prg.genere;
-						}
-					}
-					else if (prg.macrogenere != "")
-					{
-						prettygenere = prg.macrogenere;
-					}
-					else if (prg.genere != "")
-					{
-						prettygenere = prg.genere;
-					}
+                    if (prg.macrogenere != "" && prg.genere != "")
+                    {
+                        if (prg.macrogenere != prg.genere)
+                        {
+                            prettygenere = prg.macrogenere + " - " + prg.genere;
+                        }
+                        else 
+                        {
+                            prettygenere = prg.genere;
+                        }
+                    }
+                    else if (prg.macrogenere != "")
+                    {
+                        prettygenere = prg.macrogenere;
+                    }
+                    else if (prg.genere != "")
+                    {
+                        prettygenere = prg.genere;
+                    }
                     prg.prettygenere = prettygenere;
                     prg.immagine = $("div.eventDescription", val).attr("data-immagine");
                     prg.immagine = prg.immagine == "" ? "img/" + ch + "_100.jpg" : prg.immagine;
