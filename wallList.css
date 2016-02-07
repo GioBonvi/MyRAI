@@ -73,6 +73,21 @@ img.wall-ch-logo {
     font-style: italic;
 }
 
+#modal-img {
+	display: inline-block;
+	width: 100px;
+	height: 100px;
+}
+
+#modal-descrizione {
+	display: inline-block;
+	width: calc(100% - 120px);
+	vertical-align: top;
+}
+
+#modal-descrizione > .solotesto {
+	display: none;
+}
 
 /*
 

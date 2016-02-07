@@ -12,7 +12,6 @@
 
     <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
-    <script src="colorThief.js"></script>
 </head>
 <body>
 
@@ -33,8 +32,6 @@ function getChannelData(ch, data)
     };
 
     var channelData = {raw: "", list: []};
-
-    var colorThief = new ColorThief();
 
     jQuery.ajax({
         url: fetchUrl,
@@ -59,8 +56,30 @@ function getChannelData(ch, data)
                     prg.link = $(".info a", val).attr("href");
                     prg.titolo = $(".info a", val).html();
                     prg.id = $(".info a", val).attr("idprogramma");
-                    prg.genere = $("div.eventDescription", val).attr("data-genere");
-                    prg.macrogenere = $("div.eventDescription", val).attr("data-macrogenere");
+                    prg.genere = $("div.eventDescription", val).attr("data-genere").toLowerCase();
+                    prg.macrogenere = $("div.eventDescription", val).attr("data-macrogenere").toLowerCase();
+                    prg.descrizione = $("div.eventDescription", val).html();
+                    var prettygenere = "";
+					if (prg.macrogenere != "" && prg.genere != "")
+					{
+						if (prg.macrogenere != prg.genere)
+						{
+						    prettygenere = prg.macrogenere + " - " + prg.genere;
+						}
+						else 
+						{
+						    prettygenere = prg.genere;
+						}
+					}
+					else if (prg.macrogenere != "")
+					{
+						prettygenere = prg.macrogenere;
+					}
+					else if (prg.genere != "")
+					{
+						prettygenere = prg.genere;
+					}
+                    prg.prettygenere = prettygenere;
                     prg.immagine = $("div.eventDescription", val).attr("data-immagine");
                     prg.immagine = prg.immagine == "" ? "img/" + ch + "_100.jpg" : prg.immagine;
                     
@@ -130,8 +149,8 @@ function minutiToOre(total)
         <h4><span id="modal-ch"></span> - <span id="modal-titolo"></span></h4>
         <span id="modal-genere"></span>
         <span id="modal-inizio"></span>
-        
-        <p>A bunch of text</p>
+        <br><br>
+        <img id="modal-img"><p id="modal-descrizione"></p>
     </div>
     <div class="modal-footer">
         <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Chiudi</a>
@@ -140,6 +159,7 @@ function minutiToOre(total)
 
 <script>
 
+// Genera contenitori per le ore.
 for (var i = 360; i <= 1380; i = i + 60)
 {
     $("#wall-container").append('<div class="wall-hour-divider"><span>' + minutiToOre(i) + '</span><span>' + minutiToOre(i) + '</span><span>' + minutiToOre(i) + '</span></div>').append('<div class="wall-hour" data-start="' + i + '"></div>');
@@ -152,7 +172,7 @@ for (var i = 0; i < 360; i = i + 60)
 var allChannelsData = {RaiUno: "", RaiDue: "", RaiTre: "", Rai4: "", Extra: ""};
 
 var em_min = 0.7; // Ogni minuto di trasmissione corrisponde a tot em di altezza.
-var channels = ["RaiUno", "RaiDue", "RaiTre", "Rai4" ,"Extra"];
+var channels = ["RaiUno"];//, "RaiDue", "RaiTre", "Rai4" ,"Extra"];
 for (ch of channels)
 {
     $("#wall-container #channels").append('<img class="wall-ch-logo card" src="img/' + ch + '_100.jpg">');
@@ -171,28 +191,9 @@ for (ch of channels)
         var titolo = '<span class="titolo"><a ' + (link != "" ? 'href="http://' + link + '" target="_blank"' : "") + '>' + prg.titolo + '</a></span>';
         
         var genere = "";
-        if (prg.macrogenere != "" && prg.genere != "")
+        if(prg.prettygenere != "")
         {
-            if (prg.macrogenere != prg.genere)
-            {
-                genere = prg.macrogenere + " - " + prg.genere;
-            }
-            else 
-            {
-                genere = prg.genere;
-            }
-        }
-        else if (prg.macrogenere != "")
-        {
-            genere = prg.macrogenere;
-        }
-        else if (prg.genere != "")
-        {
-            genere = prg.genere;
-        }
-        if(genere != "")
-        {
-            genere = '<span class="genere">' + genere + '</span>';
+            genere = '<span class="genere">' + prg.prettygenere + '</span>';
         }
         
         var inizio = '<span class="inizio">' + minutiToOre(prg.inizio) + '</span>';
@@ -215,84 +216,13 @@ $(".wall-prg").click(function() {
     var n = $(this).attr("data-n");
     var prog = allChannelsData[channel].list[n];
     $("#modal-ch").html(channelNames[channel]);
-    $("#modal-titolo").html(prog.titolo);
-    var genere = "";
-    if (prog.macrogenere != "" && prog.genere != "")
-    {
-        if (prog.macrogenere != prg.genere)
-        {
-            genere = prog.macrogenere + " - " + prog.genere;
-        }
-        else 
-        {
-            genere = prog.genere;
-        }
-    }
-    else if (prog.macrogenere != "")
-    {
-        genere = prog.macrogenere;
-    }
-    else if (prog.genere != "")
-    {
-        genere = prog.genere;
-    }
-    $("#modal-genere").html(genere);
+    $("#modal-titolo").html(prog.titolo);    
+    $("#modal-genere").html(prog.prettygenere);
     $("#modal-inizio").html(minutiToOre(prog.inizio));
+    $("#modal-descrizione").html(prog.descrizione);
+    $("#modal-img").attr("src", prog.immagine);
     $("#modalDetails").openModal();
 });
-
-/*
-var em_min = 0.8; // Ogni minuto di trasmissione corrisponde a tot em di larghezza.
-var channels = ["RaiUno", "RaiDue", "RaiTre", "Rai4" ,"Extra"];
-for (ch of channels)
-{
-    $("#wall-container").append('<div class="wall-ch" data-ch="' + ch + '"></div>');
-    var chData = getChannelData(ch, "2016_02_05");
-    for (var i = 1; i < chData.list.length; i = i + 1)
-    {
-        var prg = chData.list[i];
-        
-        var divImg = $('<div class="wall-prg-img"></div>').append('<img src="' + prg.immagine + '">');
-        var link = ! prg.link in window ? prg.link.replace("http://", "") : "";
-        var titolo = '<span class="titolo"><a href="http://' + link + '" target="_blank">' + prg.titolo + '</a></span>';
-        
-        var genere = "";
-        if (prg.macrogenere != "" && prg.genere != "")
-        {
-            if (prg.macrogenere != prg.genere)
-            {
-                genere = prg.macrogenere + " - " + prg.genere;
-            }
-            else 
-            {
-                genere = prg.genere;
-            }
-        }
-        else if (prg.macrogenere != "")
-        {
-            genere = prg.macrogenere;
-        }
-        else if (prg.genere != "")
-        {
-            genere = prg.genere;
-        }
-        if(genere != "")
-        {
-            genere = '<span class="genere">' + genere + '</span>';
-        }
-        
-        var ora = '<span class="ora">' + prg.ora + '</span>';
-        
-        var divContent = $('<div class="wall-prg-content"></div>').append(titolo).append("<br>").append(genere).append("<br>").append(ora);
-        
-        var prgDiv = $('<div class="wall-prg card z-depth-3" style="width:' + parseFloat(prg.durata) * em_min + 'em;"></div>').append(divImg).append(divContent);
-        
-        $('.wall-ch[data-ch="' + ch + '"]').append(prgDiv);
-    }
-}
-
-console.log(getDiff("12:45", "13:10"));
-*/
 </script>
 
 </body>
