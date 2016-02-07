@@ -2,10 +2,30 @@ body {
     font-size: 100%;
 }
 
+#wall-date {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: space-around;
+    -ms-justify-content: space-around;
+    -moz-justify-content: space-around;
+    justify-content: space-around;
+}
+
+.wall-data {
+    display: inline-block;
+    padding: 0.7em;
+}
+
+.wall-data a {
+    color: white;
+}
+
 #wall-container {
+    display: block;
     border: 1em solid black;
     border-radius: 0.5em;
-    
     overflow: auto;
 }
 
@@ -14,9 +34,9 @@ body {
 }
 
 .wall-hour {
-    display: -webkit-box;  /* OLD - iOS 6-, Safari 3.1-6, BB7 */
-    display: -ms-flexbox;  /* TWEENER - IE 10 */
-    display: -webkit-flex; /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
     display: flex;
     width: 100%;
 }
@@ -25,7 +45,7 @@ body {
     border: gray solid 0.5px;
     border-left: 0;
     border-right: 0;
-    border-radius: 1 em;
+    border-radius: 1em;
     
     display: -webkit-box;
     display: -ms-flexbox;

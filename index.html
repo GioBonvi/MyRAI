@@ -136,10 +136,19 @@ function minutiToOre(total)
 <main>
 
 <!-- Modalità Wall -->
+<div id="wall-date">
+<?php
+    for ($i = 0; $i < 7; $i = $i + 1)
+    {
+        $timestamp = time() + $i * 24 * 3600;
+        echo '<div class="wall-data card green"><a data-timestamp="' . $timestamp . '" href="?data=' . $timestamp . '">' . date("Y-m-d", $timestamp) . '</a></div>' . "\n";
+    }
+?>
+</div>
 <div id="wall-container">
     <div id="channels">
+        
     </div>
-    
 </div>
 
 </main>
@@ -159,6 +168,29 @@ function minutiToOre(total)
 
 <script>
 
+var data = "<?php
+
+if (! isset($_GET['data']))
+{
+    $_GET['data'] = time();
+}
+else if (! is_numeric($_GET['data']))
+{
+    $_GET['data'] = time();
+}
+else if ($_GET['data'] < time())
+{
+    $_GET['data'] = time();
+}
+
+$data = date("Y_m_d", $_GET['data']);
+
+echo $data;
+
+?>";
+
+var timestamp = <?= $_GET['data'];?>;
+
 // Genera contenitori per le ore.
 for (var i = 360; i <= 1380; i = i + 60)
 {
@@ -177,7 +209,7 @@ for (ch of channels)
 {
     $("#wall-container #channels").append('<img class="wall-ch-logo card" src="img/' + ch + '_100.jpg">');
     $(".wall-hour").append('<div class="wall-ch" data-ch="' + ch + '"></div>');
-    var chData = getChannelData(ch, "2016_02_06");
+    var chData = getChannelData(ch, data);
     allChannelsData[ch] = chData;
     for (var i = 1; i < chData.list.length; i = i + 1)
     {
