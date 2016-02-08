@@ -153,7 +153,7 @@ function minutiToOre(total)
 
 </main>
 
-<div id="modalDetails" class="modal">
+<div id="modalDetails" class="modal modal-fixed-footer">
     <div class="modal-content">
         <h4><span id="modal-ch"></span> - <span id="modal-titolo"></span></h4>
         <span id="modal-genere"></span>
@@ -167,6 +167,8 @@ function minutiToOre(total)
 </div>
 
 <script>
+
+$("#wall-container").height(window.innerHeight);
 
 var data = "<?php
 
@@ -194,19 +196,22 @@ var timestamp = <?= $_GET['data'];?>;
 // Genera contenitori per le ore.
 for (var i = 360; i <= 1380; i = i + 60)
 {
-    $("#wall-container").append('<div class="wall-hour-divider"><span>' + minutiToOre(i) + '</span><span>' + minutiToOre(i) + '</span><span>' + minutiToOre(i) + '</span></div>').append('<div class="wall-hour" data-start="' + i + '"></div>');
+    $("#wall-container").append('<div class="wall-hour-divider" data-ora="' + minutiToOre(i) + '"></div>').append('<div class="wall-hour" data-start="' + i + '"></div>');
 }
 for (var i = 0; i < 360; i = i + 60)
 {
-    $("#wall-container").append('<div class="wall-hour-divider"><span>' + minutiToOre(i) + '</span><span>' + minutiToOre(i) + '</span><span>' + minutiToOre(i) + '</span></div>').append('<div class="wall-hour" data-start="' + i + '"></div>');
+    $("#wall-container").append('<div class="wall-hour-divider" data-ora="' + minutiToOre(i) + '"></div>').append('<div class="wall-hour" data-start="' + i + '"></div>');
 }
 
 var allChannelsData = {RaiUno: "", RaiDue: "", RaiTre: "", Rai4: "", Extra: ""};
 
 var em_min = 0.7; // Ogni minuto di trasmissione corrisponde a tot em di altezza.
-var channels = ["RaiUno", "RaiDue", "RaiTre", "Rai4" ,"Extra"];
+var channels = ["RaiUno", "RaiDue", "RaiTre", "Rai4"];// ,"Extra"];
 for (ch of channels)
 {
+    $(".wall-hour-divider").each(function() {
+        $(this).append('<span>' + $(this).attr("data-ora") + '</span>');
+    });
     $("#wall-container #channels").append('<img class="wall-ch-logo card" src="img/' + ch + '_100.jpg">');
     $(".wall-hour").append('<div class="wall-ch" data-ch="' + ch + '"></div>');
     var chData = getChannelData(ch, data);
@@ -251,7 +256,7 @@ $(".wall-prg").click(function() {
     $("#modal-titolo").html(prog.titolo);    
     $("#modal-genere").html(prog.prettygenere);
     $("#modal-inizio").html(minutiToOre(prog.inizio));
-    $("#modal-descrizione").html(prog.descrizione);
+    $("#modal-descrizione").html((prog.descrizione == "" ? "Nessuna descrizione" : prog.descrizione));
     $("#modal-img").attr("src", prog.immagine);
     $("#modalDetails").openModal();
 });
