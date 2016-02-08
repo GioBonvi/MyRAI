@@ -59,6 +59,11 @@ function getChannelData(ch, data)
                     prg.genere = $("div.eventDescription", val).attr("data-genere").toLowerCase();
                     prg.macrogenere = $("div.eventDescription", val).attr("data-macrogenere").toLowerCase();
                     prg.descrizione = $("div.eventDescription", val).html();
+                    prg.descrizione = prg.descrizione.replace(new RegExp("\n<span.*span>\n", "g"), "");
+                    if (prg.descrizione == "")
+                    {
+                        prg.descrizione = "Nessuna descrizione";
+                    }
                     var prettygenere = "";
                     if (prg.macrogenere != "" && prg.genere != "")
                     {
@@ -256,7 +261,7 @@ $(".wall-prg").click(function() {
     $("#modal-titolo").html(prog.titolo);    
     $("#modal-genere").html(prog.prettygenere);
     $("#modal-inizio").html(minutiToOre(prog.inizio));
-    $("#modal-descrizione").html((prog.descrizione == "" ? "Nessuna descrizione" : prog.descrizione));
+    $("#modal-descrizione").html(prog.descrizione);
     $("#modal-img").attr("src", prog.immagine);
     $("#modalDetails").openModal();
 });
