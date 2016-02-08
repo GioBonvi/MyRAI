@@ -12,145 +12,9 @@
 
     <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+    <script src="getPrograms.js"></script>
 </head>
 <body>
-
-<script>
-/*
- * Recupera tutte le informazioni su tutti i programmi in onda un certo giorno su un certo canale.
- * All'indirizzo http://www.rai.it/dl/portale/html/palinsesti/guidatv/static/CANALE_DATA.html
- * si trova una grezza lista di programmi con ore di trasmissione e dettagli:
- * la lista (in HTML) viene elaborata e restituita sottoforma di array Javascript.
- * L'array contiene i vari programmi sottoforma di Object() con:
- *  titolo
- *  id
- *  inizio (in minuti trascorsi dalla mezzanotte)
- *  durata (in minuti)
- *  link (non sempre specificato - una pagina dedicata della RAI sul programma)
- *  descrizione (non sempre specificata)
- *  macrogenere (non sempre specificato)
- *  genere (non sempre sepcificato)
- *  prettygenere (una combinazione ottimizzata per la lettura tipo "macrogenere - genere")
- *  immagine (non sempre specificata - un'icona del programma)
- */
-function getChannelData(ch, data)
-{
-    var baseUrl = "http://www.rai.it/dl/portale/html/palinsesti/guidatv/static/";
-    var fetchUrl = baseUrl + ch + "_" + data + ".html";
-    // Qui vengono salvate le informazioni riguardo alla programmazione.
-    var channelData = [];
-
-    jQuery.ajax({
-        url: fetchUrl,
-        success: function(html)
-            {
-                var extHTML = $(html);
-                
-                // Viene inserito un primo programma "Fake" necesario per determinare
-                // correttamente la durata del primo programma effettivo.
-                prg = new Object();
-                prg.inizio = "360";
-                prg.titolo = "Start";
-                channelData.push(prg);
-                // Estrazione delle informazioni.
-                $.each($(".intG", extHTML), function(n, val)
-                {
-                    val = $(val);
-                    prg = new Object();
-                    
-                    prg.titolo = $(".info a", val).html();
-                    prg.id = $(".info a", val).attr("idprogramma");
-                    
-                    var inizio = $(".ora", val).html();
-                    prg.inizio = (parseInt(inizio[0]) * 10 + parseInt(inizio[1])) * 60 + parseInt(inizio[3]) * 10 + parseInt(inizio[4]);
-                    
-                    prg.link = $(".info a", val).attr("href");
-                    prg.descrizione = $("div.eventDescription", val).html();
-                    prg.descrizione = prg.descrizione.replace(new RegExp("<span.*span>\n", "g"), "");
-                    if (prg.descrizione == "\n")
-                    {
-                        prg.descrizione = "Nessuna descrizione";
-                    }
-                    
-                    prg.genere = $("div.eventDescription", val).attr("data-genere").toLowerCase();
-                    prg.macrogenere = $("div.eventDescription", val).attr("data-macrogenere").toLowerCase();
-                    // Combinazione ottimizzata di genere e macrogenere.
-                    var prettygenere = "";
-                    if (prg.macrogenere != "" && prg.genere != "")
-                    {
-                        if (prg.macrogenere != prg.genere)
-                        {
-                            prettygenere = prg.macrogenere + " - " + prg.genere;
-                        }
-                        else 
-                        {
-                            prettygenere = prg.genere;
-                        }
-                    }
-                    else if (prg.macrogenere != "")
-                    {
-                        prettygenere = prg.macrogenere;
-                    }
-                    else if (prg.genere != "")
-                    {
-                        prettygenere = prg.genere;
-                    }
-                    prg.prettygenere = prettygenere;
-                    
-                    prg.immagine = $("div.eventDescription", val).attr("data-immagine");
-                    prg.immagine = prg.immagine == "" ? "img/" + ch + "_100.jpg" : prg.immagine;
-                    
-                    var lastPrg = channelData[channelData.length - 1];
-                    prg.durata = getDiff(lastPrg.inizio, prg.inizio);
-
-                    // Possono comparire programmi dupicati per errore.
-                    if (lastPrg.inizio == prg.inizio && lastPrg.id == prg.id)
-                    {
-                        // Rimuovi il vecchio.
-                        channelData.pop();
-                    }
-                    
-                    // Alcune volte il programma è segnato alle 6:00, ma è alla fine della giornata e non all'inizio.
-                    // Per evitarre dubbi viene spostato alle 5:59.
-                    if (prg.inizio == 360 && lastPrg.inizio < 360)
-                    {
-                        prg.inizio = prg.inizio - 1;
-                    }
-                    
-                    // Aggiungi il nuovo programma.
-                    channelData.push(prg);
-                });
-            },
-        async: false
-    });
-    return channelData;
-}
-
-// Ottieni la differenza in minuti fra due ore (anche a cavallo della mezzanotte).
-function getDiff(oraPrima, oraDopo)
-{
-    if (oraDopo >= oraPrima)
-    {
-        // Ore regolari.
-        return oraDopo - oraPrima;
-    }
-    else
-    {
-        // A cavallo della mezzanotte.
-        return (24*60 - oraPrima + oraDopo);
-    }
-} 
-
-// Converti un numero di minuti nell'ora corrispondente xx:xx (0 = 00:00, 60 = 01:00)
-function minutiToOra(total)
-{
-    var ore = Math.floor(total/60);
-    ore = ore < 9 ? '0' + ore : ore;
-    var minuti = total % 60;
-    minuti = minuti < 9 ? '0' + minuti : minuti;
-    return (ore + ":" + minuti);
-}
-</script>
 
 <main>
 
@@ -236,10 +100,10 @@ function minutiToOra(total)
 
 <script>
 
-$("#wall-container").height(window.innerHeight);
+$("#wall-container").height(window.innerHeight - $("#wall-date").height());
 
-var data = "<?php
 // Imposta la data attuale in base al parametro "data" nell'URL.
+var data = "<?php
 if (! isset($_GET['data']))
 {
     $_GET['data'] = time();
@@ -252,34 +116,121 @@ else if ($_GET['data'] < time())
 {
     $_GET['data'] = time();
 }
-
-$data = date("Y_m_d", $_GET['data']);
-
-echo $data;
+echo date("Y_m_d", $_GET['data']);
 ?>";
+
 // Data sottoforma di timestamp UNIX;
 var timestamp = <?= $_GET['data'];?>;
+
+// Canali da mostrare.
+var myChannels = [<?php
+if (! isset ($_GET['channels']))
+{
+    $_GET['channels'] = "RaiUno,RaiDue,RaiTre,Rai4,Extra";
+}
+$channels = split(",", $_GET['channels']);
+$chOK = ["RaiUno", "RaiDue", "RaiTre", "Rai4", "Extra"];
+foreach ($channels as $ch)
+{
+    if (in_array($ch, $chOK))
+    {
+        echo '"' . $ch . '",';
+    }
+}
+?>];
+
+// Filtro per genere.
+var filtroGenere = "<?php
+if (! isset ($_GET['genere']))
+{
+    $_GET['genere'] = "";
+}
+else if (! preg_match("/^[0-9a-zA-Zàèéìòù.,-]*$/", $_GET['genere']))
+{
+    $_GET['genere'] = "";
+}
+echo $_GET['genere'];
+?>";
+
+// Filtro per macrogenere.
+var filtroMacrogenere = "<?php
+if (! isset ($_GET['macrogenere']))
+{
+    $_GET['macrogenere'] = "";
+}
+else if (! preg_match("/^[0-9a-zA-Zàèéìòù.,-]*$/", $_GET['macrogenere']))
+{
+    $_GET['macrogenere'] = "";
+}
+echo $_GET['macrogenere'];
+?>";
+
+// Filtro per titolo.
+var filtroTitolo = "<?php
+if (! isset ($_GET['titolo']))
+{
+    $_GET['titolo'] = "";
+}
+else if (! preg_match("/^[0-9a-zA-Zàèéìòù.,-]*$/", $_GET['titolo']))
+{
+    $_GET['titolo'] = "";
+}
+echo $_GET['titolo'];
+?>";
+
+// Filtro per descrizione (testo che DEVE essere presente).
+var filtroDescrizioneOK = "<?php
+if (! isset ($_GET['descrOK']))
+{
+    $_GET['descrOK'] = "";
+}
+else if (! preg_match("/^[0-9a-zA-Zàèéìòù.,-]*$/", $_GET['descrOK']))
+{
+    $_GET['descrOK'] = "";
+}
+echo $_GET['descrOK'];
+?>";
+
+// Filtro per descrizione (testo che NON deve essere presente).
+var filtroDescrizioneNO = "<?php
+if (! isset ($_GET['descrNO']))
+{
+    $_GET['descrNO'] = "";
+}
+else if (! preg_match("/^[0-9a-zA-Zàèéìòù.,-]*$/", $_GET['descrNO']))
+{
+    $_GET['descrNO'] = "";
+}
+echo $_GET['descrNO'];
+?>";
+
+var filtri = [
+filtroGenere,
+filtroMacrogenere,
+filtroTitolo,
+filtroDescrizioneOK,
+filtroDescrizioneNO
+];
 
 var allChannelsData = {RaiUno: "", RaiDue: "", RaiTre: "", Rai4: "", Extra: ""};
 
 var em_min = 0.7; // Ogni minuto di trasmissione corrisponde a 0.7 em di altezza.
-var channels = ["RaiUno", "RaiDue", "RaiTre", "Rai4", "Extra"];
 /*
  * Per ogni canale viene aggiunto:
  *  il logo
  *  le ore nelle divisioni fra ore
  *  i programmi nelle ore corrispondenti
  */
-for (ch of channels)
+for (ch of myChannels)
 {
     $(".wall-hour-divider").each(function() {
         $(this).append('<span>' + $(this).attr("data-ora") + '</span>');
     });
     $("#wall-container #channels").append('<img class="wall-ch-logo card" src="img/' + ch + '_100.jpg">');
     $(".wall-hour").append('<div class="wall-ch" data-ch="' + ch + '"></div>');
-    var chData = getChannelData(ch, data);
+    var chData = getChannelData(ch, data, filtri);
     allChannelsData[ch] = chData;
-    for (var i = 1; i < chData.length; i = i + 1)
+    for (var i = 0; i < chData.length; i = i + 1)
     {
         var prg = chData[i];
         
@@ -302,6 +253,17 @@ for (ch of channels)
         $('.wall-hour[data-start="' + Math.floor(prg.inizio / 60) * 60 + '"] .wall-ch[data-ch="' + ch + '"]').append(prgDiv);
     }
 }
+
+$(".wall-hour").each(function() {
+    // Rimuovi tutte le ore che non contengono programmazione.
+    $allChildren = $(this).children();
+    $allEmptyChildren = $allChildren.filter(':empty');
+    if ($allChildren.length == $allEmptyChildren.length)
+    {
+        $(this).prev().remove();
+        $(this).remove();
+    }
+});
 
 $(".wall-prg").click(function() {
     channelNames = {
