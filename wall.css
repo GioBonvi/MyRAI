@@ -29,12 +29,20 @@ body, main {
     color: white;
 }
 
+#wall-preloader-container {
+    width: 100%;
+    position: absolute;
+    top: 10em;
+    text-align: center;
+}
+
 #wall-container {
     margin-top: 1em;
     display: block;
     border: 1em solid black;
     border-radius: 0.5em;
     overflow: auto;
+    height: 40em;
 }
 
 #wall-container #channels {
