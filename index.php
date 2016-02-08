@@ -8,6 +8,7 @@
     
     <link rel="stylesheet" href="http://fonts.googleapis.com/icon?family=Material+Icons">
     <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+    <link type="text/css" rel="stylesheet" href="main.css">
     <link type="text/css" rel="stylesheet" href="wall.css">
 
     <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
@@ -19,18 +20,18 @@
 <main>
 
 <!-- Modalità Wall -->
-<div id="wall-date">
+<div id="date">
 <?php
     for ($i = 0; $i < 7; $i = $i + 1)
     {
         $timestamp = time() + $i * 24 * 3600;
-        echo '<div class="wall-data card green"><a data-timestamp="' . $timestamp . '" href="?data=' . $timestamp . '">' . date("Y-m-d", $timestamp) . '</a></div>' . "\n";
+        echo '<div class="data card green"><a data-timestamp="' . $timestamp . '" href="?data=' . $timestamp . '">' . date("Y-m-d", $timestamp) . '</a></div>' . "\n";
     }
 ?>
 </div>
 
-<div id="wall-preloader-container">
-    <div id="wall-preloader" class="preloader-wrapper big active">
+<div id="preloader-container">
+    <div id="preloader" class="preloader-wrapper big active">
         <div class="spinner-layer spinner-green-only">
             <div class="circle-clipper left">
                 <div class="circle"></div>
@@ -234,7 +235,6 @@ filtroTitolo,
 filtroDescrizioneOK,
 filtroDescrizioneNO
 ];
-
 </script>
 
 <script src="wall.js"></script>

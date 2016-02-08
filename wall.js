@@ -78,7 +78,7 @@ $(".wall-prg").click(function() {
     $("#modalDetails").openModal();
 });
 
-$("#wall-preloader").removeClass("active");
+$("#preloader").removeClass("active");
 $("#wall-container").show();
 
 });

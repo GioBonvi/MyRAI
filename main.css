@@ -1,0 +1,46 @@
+#date {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: space-between;
+    -ms-justify-content: space-between;
+    -moz-justify-content: space-between;
+    justify-content: space-between;
+    width: 100%;
+    overflow: auto;
+}
+
+.data {
+    -webkit-flex: 0 0 auto;
+    -moz-flex: 0 0 auto;
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+    padding: 0.7em;
+    margin: 0 0.2em;
+}
+
+.data a {
+    color: white;
+}
+
+#preloader-container {
+    width: 100%;
+    position: absolute;
+    top: 10em;
+    text-align: center;
+}
+
+#modal-img {
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    margin-right: 0.5em;
+}
+
+#modal-descrizione {
+    display: inline-block;
+    width: calc(100% - 120px);
+    margin-top: 0;
+    vertical-align: top;
+}
