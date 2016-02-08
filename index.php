@@ -153,7 +153,7 @@ if (! isset ($_GET['channels']))
     $_GET['channels'] = "RaiUno,RaiDue,RaiTre,Rai4,Extra";
 }
 $channels = split(",", $_GET['channels']);
-$chOK = ["RaiUno", "RaiDue", "RaiTre", "Rai4", "Extra"];
+$chOK = array("RaiUno", "RaiDue", "RaiTre", "Rai4", "Extra");
 foreach ($channels as $ch)
 {
     if (in_array($ch, $chOK))
