@@ -16,54 +16,65 @@
 <body>
 
 <script>
-// Recupera tutte le informazioni su tutti iprogrammi in onda un certo giorno su un certo canale.
+/*
+ * Recupera tutte le informazioni su tutti i programmi in onda un certo giorno su un certo canale.
+ * All'indirizzo http://www.rai.it/dl/portale/html/palinsesti/guidatv/static/CANALE_DATA.html
+ * si trova una grezza lista di programmi con ore di trasmissione e dettagli:
+ * la lista (in HTML) viene elaborata e restituita sottoforma di array Javascript.
+ * L'array contiene i vari programmi sottoforma di Object() con:
+ *  titolo
+ *  id
+ *  inizio (in minuti trascorsi dalla mezzanotte)
+ *  durata (in minuti)
+ *  link (non sempre specificato - una pagina dedicata della RAI sul programma)
+ *  descrizione (non sempre specificata)
+ *  macrogenere (non sempre specificato)
+ *  genere (non sempre sepcificato)
+ *  prettygenere (una combinazione ottimizzata per la lettura tipo "macrogenere - genere")
+ *  immagine (non sempre specificata - un'icona del programma)
+ */
 function getChannelData(ch, data)
 {
     var baseUrl = "http://www.rai.it/dl/portale/html/palinsesti/guidatv/static/";
     var fetchUrl = baseUrl + ch + "_" + data + ".html";
-
-    var colorPalettes =
-    {
-        RaiUno:
-        {
-            main: "#0056A5",
-            border: "#003b72"
-        }
-    };
-
-    var channelData = {raw: "", list: []};
+    // Qui vengono salvate le informazioni riguardo alla programmazione.
+    var channelData = [];
 
     jQuery.ajax({
         url: fetchUrl,
         success: function(html)
             {
-                channelData.raw = html;
                 var extHTML = $(html);
                 
-                // Primo programma fake (necessario per contare la durata).
+                // Viene inserito un primo programma "Fake" necesario per determinare
+                // correttamente la durata del primo programma effettivo.
                 prg = new Object();
                 prg.inizio = "360";
                 prg.titolo = "Start";
-                channelData.list.push(prg);
-                
+                channelData.push(prg);
+                // Estrazione delle informazioni.
                 $.each($(".intG", extHTML), function(n, val)
                 {
                     val = $(val);
                     prg = new Object();
-                    var inizio = $(".ora", val).html();
-                    inizio = (parseInt(inizio[0]) * 10 + parseInt(inizio[1])) * 60 + parseInt(inizio[3]) * 10 + parseInt(inizio[4]);
-                    prg.inizio = inizio;
-                    prg.link = $(".info a", val).attr("href");
+                    
                     prg.titolo = $(".info a", val).html();
                     prg.id = $(".info a", val).attr("idprogramma");
-                    prg.genere = $("div.eventDescription", val).attr("data-genere").toLowerCase();
-                    prg.macrogenere = $("div.eventDescription", val).attr("data-macrogenere").toLowerCase();
+                    
+                    var inizio = $(".ora", val).html();
+                    prg.inizio = (parseInt(inizio[0]) * 10 + parseInt(inizio[1])) * 60 + parseInt(inizio[3]) * 10 + parseInt(inizio[4]);
+                    
+                    prg.link = $(".info a", val).attr("href");
                     prg.descrizione = $("div.eventDescription", val).html();
-                    prg.descrizione = prg.descrizione.replace(new RegExp("\n<span.*span>\n", "g"), "");
-                    if (prg.descrizione == "")
+                    prg.descrizione = prg.descrizione.replace(new RegExp("<span.*span>\n", "g"), "");
+                    if (prg.descrizione == "\n")
                     {
                         prg.descrizione = "Nessuna descrizione";
                     }
+                    
+                    prg.genere = $("div.eventDescription", val).attr("data-genere").toLowerCase();
+                    prg.macrogenere = $("div.eventDescription", val).attr("data-macrogenere").toLowerCase();
+                    // Combinazione ottimizzata di genere e macrogenere.
                     var prettygenere = "";
                     if (prg.macrogenere != "" && prg.genere != "")
                     {
@@ -85,27 +96,29 @@ function getChannelData(ch, data)
                         prettygenere = prg.genere;
                     }
                     prg.prettygenere = prettygenere;
+                    
                     prg.immagine = $("div.eventDescription", val).attr("data-immagine");
                     prg.immagine = prg.immagine == "" ? "img/" + ch + "_100.jpg" : prg.immagine;
                     
-                    // La durata serve per dare l'altezza delle barre.
-                    var lastPrg = channelData.list[channelData.list.length - 1];
+                    var lastPrg = channelData[channelData.length - 1];
                     prg.durata = getDiff(lastPrg.inizio, prg.inizio);
+
                     // Possono comparire programmi dupicati per errore.
                     if (lastPrg.inizio == prg.inizio && lastPrg.id == prg.id)
                     {
                         // Rimuovi il vecchio.
-                        channelData.list.pop();
+                        channelData.pop();
                     }
+                    
                     // Alcune volte il programma è segnato alle 6:00, ma è alla fine della giornata e non all'inizio.
                     // Per evitarre dubbi viene spostato alle 5:59.
                     if (prg.inizio == 360 && lastPrg.inizio < 360)
                     {
-                        // Rimuovi il vecchio.
                         prg.inizio = prg.inizio - 1;
                     }
+                    
                     // Aggiungi il nuovo programma.
-                    channelData.list.push(prg);
+                    channelData.push(prg);
                 });
             },
         async: false
@@ -113,6 +126,7 @@ function getChannelData(ch, data)
     return channelData;
 }
 
+// Ottieni la differenza in minuti fra due ore (anche a cavallo della mezzanotte).
 function getDiff(oraPrima, oraDopo)
 {
     if (oraDopo >= oraPrima)
@@ -127,13 +141,13 @@ function getDiff(oraPrima, oraDopo)
     }
 } 
 
-function minutiToOre(total)
+// Converti un numero di minuti nell'ora corrispondente xx:xx (0 = 00:00, 60 = 01:00)
+function minutiToOra(total)
 {
     var ore = Math.floor(total/60);
     ore = ore < 9 ? '0' + ore : ore;
     var minuti = total % 60;
     minuti = minuti < 9 ? '0' + minuti : minuti;
-    
     return (ore + ":" + minuti);
 }
 </script>
@@ -154,10 +168,59 @@ function minutiToOre(total)
     <div id="channels">
         
     </div>
+    <div class="wall-hour-divider" data-ora="06:00"></div>
+    <div class="wall-hour" data-start="360"></div>
+    <div class="wall-hour-divider" data-ora="07:00"></div>
+    <div class="wall-hour" data-start="420"></div>
+    <div class="wall-hour-divider" data-ora="08:00"></div>
+    <div class="wall-hour" data-start="480"></div>
+    <div class="wall-hour-divider" data-ora="09:00"></div>
+    <div class="wall-hour" data-start="540"></div>
+    <div class="wall-hour-divider" data-ora="10:00"></div>
+    <div class="wall-hour" data-start="600"></div>
+    <div class="wall-hour-divider" data-ora="11:00"></div>
+    <div class="wall-hour" data-start="660"></div>
+    <div class="wall-hour-divider" data-ora="12:00"></div>
+    <div class="wall-hour" data-start="720"></div>
+    <div class="wall-hour-divider" data-ora="13:00"></div>
+    <div class="wall-hour" data-start="780"></div>
+    <div class="wall-hour-divider" data-ora="14:00"></div>
+    <div class="wall-hour" data-start="840"></div>
+    <div class="wall-hour-divider" data-ora="15:00"></div>
+    <div class="wall-hour" data-start="900"></div>
+    <div class="wall-hour-divider" data-ora="16:00"></div>
+    <div class="wall-hour" data-start="960"></div>
+    <div class="wall-hour-divider" data-ora="17:00"></div>
+    <div class="wall-hour" data-start="1020"></div>
+    <div class="wall-hour-divider" data-ora="18:00"></div>
+    <div class="wall-hour" data-start="1080"></div>
+    <div class="wall-hour-divider" data-ora="19:00"></div>
+    <div class="wall-hour" data-start="1140"></div>
+    <div class="wall-hour-divider" data-ora="20:00"></div>
+    <div class="wall-hour" data-start="1200"></div>
+    <div class="wall-hour-divider" data-ora="21:00"></div>
+    <div class="wall-hour" data-start="1260"></div>
+    <div class="wall-hour-divider" data-ora="22:00"></div>
+    <div class="wall-hour" data-start="1320"></div>
+    <div class="wall-hour-divider" data-ora="23:00"></div>
+    <div class="wall-hour" data-start="1380"></div>
+    <div class="wall-hour-divider" data-ora="00:00"></div>
+    <div class="wall-hour" data-start="0"></div>
+    <div class="wall-hour-divider" data-ora="01:00"></div>
+    <div class="wall-hour" data-start="60"></div>
+    <div class="wall-hour-divider" data-ora="02:00"></div>
+    <div class="wall-hour" data-start="120"></div>
+    <div class="wall-hour-divider" data-ora="03:00"></div>
+    <div class="wall-hour" data-start="180"></div>
+    <div class="wall-hour-divider" data-ora="04:00"></div>
+    <div class="wall-hour" data-start="240"></div>
+    <div class="wall-hour-divider" data-ora="05:00"></div>
+    <div class="wall-hour" data-start="300"></div>
 </div>
 
 </main>
 
+<!-- Popup di approfondimento con i dettagli di un programma. -->
 <div id="modalDetails" class="modal modal-fixed-footer">
     <div class="modal-content">
         <h4><span id="modal-ch"></span> - <span id="modal-titolo"></span></h4>
@@ -176,7 +239,7 @@ function minutiToOre(total)
 $("#wall-container").height(window.innerHeight);
 
 var data = "<?php
-
+// Imposta la data attuale in base al parametro "data" nell'URL.
 if (! isset($_GET['data']))
 {
     $_GET['data'] = time();
@@ -193,25 +256,20 @@ else if ($_GET['data'] < time())
 $data = date("Y_m_d", $_GET['data']);
 
 echo $data;
-
 ?>";
-
+// Data sottoforma di timestamp UNIX;
 var timestamp = <?= $_GET['data'];?>;
-
-// Genera contenitori per le ore.
-for (var i = 360; i <= 1380; i = i + 60)
-{
-    $("#wall-container").append('<div class="wall-hour-divider" data-ora="' + minutiToOre(i) + '"></div>').append('<div class="wall-hour" data-start="' + i + '"></div>');
-}
-for (var i = 0; i < 360; i = i + 60)
-{
-    $("#wall-container").append('<div class="wall-hour-divider" data-ora="' + minutiToOre(i) + '"></div>').append('<div class="wall-hour" data-start="' + i + '"></div>');
-}
 
 var allChannelsData = {RaiUno: "", RaiDue: "", RaiTre: "", Rai4: "", Extra: ""};
 
-var em_min = 0.7; // Ogni minuto di trasmissione corrisponde a tot em di altezza.
-var channels = ["RaiUno", "RaiDue", "RaiTre", "Rai4"];// ,"Extra"];
+var em_min = 0.7; // Ogni minuto di trasmissione corrisponde a 0.7 em di altezza.
+var channels = ["RaiUno", "RaiDue", "RaiTre", "Rai4", "Extra"];
+/*
+ * Per ogni canale viene aggiunto:
+ *  il logo
+ *  le ore nelle divisioni fra ore
+ *  i programmi nelle ore corrispondenti
+ */
 for (ch of channels)
 {
     $(".wall-hour-divider").each(function() {
@@ -221,9 +279,9 @@ for (ch of channels)
     $(".wall-hour").append('<div class="wall-ch" data-ch="' + ch + '"></div>');
     var chData = getChannelData(ch, data);
     allChannelsData[ch] = chData;
-    for (var i = 1; i < chData.list.length; i = i + 1)
+    for (var i = 1; i < chData.length; i = i + 1)
     {
-        var prg = chData.list[i];
+        var prg = chData[i];
         
         // Se il programma dura troppo poco l'immagine viene nascosta per fare spaizo al testo.
         var divImg = divImg = $('<div class="wall-prg-img"></div>').append('<img src="' + prg.immagine + '" ' + ((prg.durata * em_min) < 10 ? "hidden" : "") + '>');
@@ -238,7 +296,7 @@ for (ch of channels)
             genere = '<span class="genere">' + prg.prettygenere + '</span>';
         }
         
-        var inizio = '<span class="inizio">' + minutiToOre(prg.inizio) + '</span>';
+        var inizio = '<span class="inizio">' + minutiToOra(prg.inizio) + '</span>';
         var divContent = $('<div class="wall-prg-content"></div>').append(titolo).append("<br>").append(genere).append("<br>").append(inizio);
         var prgDiv = $('<div data-n="' + i + '" class="wall-prg card z-depth-3" style="min-height:' + prg.durata * em_min + 'em"></div>').append(divImg).append(divContent);
         $('.wall-hour[data-start="' + Math.floor(prg.inizio / 60) * 60 + '"] .wall-ch[data-ch="' + ch + '"]').append(prgDiv);
@@ -256,11 +314,11 @@ $(".wall-prg").click(function() {
     
     var channel = $(this).parent().attr("data-ch");
     var n = $(this).attr("data-n");
-    var prog = allChannelsData[channel].list[n];
+    var prog = allChannelsData[channel][n];
     $("#modal-ch").html(channelNames[channel]);
     $("#modal-titolo").html(prog.titolo);    
     $("#modal-genere").html(prog.prettygenere);
-    $("#modal-inizio").html(minutiToOre(prog.inizio));
+    $("#modal-inizio").html(minutiToOra(prog.inizio));
     $("#modal-descrizione").html(prog.descrizione);
     $("#modal-img").attr("src", prog.immagine);
     $("#modalDetails").openModal();

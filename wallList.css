@@ -8,15 +8,21 @@ body, main {
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
-    -webkit-justify-content: space-around;
-    -ms-justify-content: space-around;
-    -moz-justify-content: space-around;
-    justify-content: space-around;
+    -webkit-justify-content: space-between;
+    -ms-justify-content: space-between;
+    -moz-justify-content: space-between;
+    justify-content: space-between;
+    width: 100%;
+    overflow: auto;
 }
 
 .wall-data {
-    display: inline-block;
+    -webkit-flex: 0 0 auto;
+    -moz-flex: 0 0 auto;
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
     padding: 0.7em;
+    margin: 0 0.2em;
 }
 
 .wall-data a {
@@ -24,6 +30,7 @@ body, main {
 }
 
 #wall-container {
+    margin-top: 1em;
     display: block;
     border: 1em solid black;
     border-radius: 0.5em;
@@ -31,7 +38,7 @@ body, main {
 }
 
 #wall-container #channels {
-    display: -webkit-box;
+    display: -moz-flex;
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
@@ -132,16 +139,14 @@ img.wall-ch-logo {
     display: inline-block;
     width: 100px;
     height: 100px;
+    margin-right: 0.5em;
 }
 
 #modal-descrizione {
     display: inline-block;
     width: calc(100% - 120px);
+    margin-top: 0;
     vertical-align: top;
-}
-
-#modal-descrizione > .solotesto {
-    display: none;
 }
 
 /*COLORI CANALI*/
