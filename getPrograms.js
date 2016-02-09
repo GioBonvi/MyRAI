@@ -99,8 +99,44 @@ function getChannelData(ch, data, filtri)
                         prg.inizio = prg.inizio - 1;
                     }
                     
-                    prg.testGen = filtri[0] == "" ? true : (new RegExp("^" + filtri[0] + "$","i")).test(prg.genere);
-                    prg.testMacGen = filtri[1] == "" ? true : (new RegExp("^" + filtri[1] + "$","i")).test(prg.macrogenere);
+                    // Test genere.
+                    if (filtri[0] == "")
+                    {
+                        // Nessun filtro stabilito -> tutti i programmi vanno bene.
+                        prg.testGen = true;                        
+                    }
+                    else
+                    {
+                        // Se c'è un filtro stabilito solo i programmi i cui generi compaiono
+                        // nell'array vanno bene.
+                        var filtroGen = filtri[0].split(",");
+                        prg.testGen = false;
+                        // Escludiamo il caso in cui un programma non ha un genere.
+                        if (prg.genere != "" && filtroGen.indexOf(prg.genere) != -1)
+                        {
+                            prg.testGen = true;
+                        }
+                    }
+                    
+                    // Test macrogenere.
+                    if (filtri[1] == "")
+                    {
+                        // Nessun filtro stabilito -> tutti i programmi vanno bene.
+                        prg.testMacGen = true;                        
+                    }
+                    else
+                    {
+                        // Se c'è un filtro stabilito solo i programmi i cui macrogeneri compaiono
+                        // nell'array vanno bene.
+                        var filtroMacGen = filtri[1].split(",");
+                        prg.testMacGen = false;
+                        // Escludiamo il caso in cui un programma non ha un macrogenere.
+                        if (prg.macrogenere != "" && filtroMacGen.indexOf(prg.macrogenere) != -1)
+                        {
+                            prg.testMacGen = true;
+                        }
+                    }
+                    
                     prg.testTit = (new RegExp(filtri[2],"i")).test(prg.titolo);
                     prg.testDescOK = (new RegExp(filtri[3],"i")).test(prg.descrizione);
                     prg.testDescNO = filtri[4] == "" ? true : ! (new RegExp(filtri[4],"i")).test(prg.descrizione);

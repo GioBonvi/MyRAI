@@ -13,22 +13,10 @@
 
     <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+    <script src="main.js"></script>
     <script src="getPrograms.js"></script>
 </head>
 <body>
-
-<main>
-
-<!-- Modalità Wall -->
-<div id="date">
-<?php
-    for ($i = 0; $i < 7; $i = $i + 1)
-    {
-        $timestamp = time() + $i * 24 * 3600;
-        echo '<div class="data card green"><a data-timestamp="' . $timestamp . '" href="?data=' . $timestamp . '">' . date("Y-m-d", $timestamp) . '</a></div>' . "\n";
-    }
-?>
-</div>
 
 <div id="preloader-container">
     <div id="preloader" class="preloader-wrapper big active">
@@ -45,7 +33,142 @@
         </div>
     </div>
 </div>
-<div id="wall-container" style="display: none">
+
+<main style="display: none">
+
+<div class="container">
+
+<h3>My RAI</h3>
+<p>Puoi effettuare una ricerca di uno specifico canale cliccando qui:</p>
+<button class="btn waves-effect waves-light" onclick="$('#ricerca-container').toggle('medium');">Mostra <i class="mdi-action-search small right"></i></button>
+<p>NB: Non inserire caratteri che non siano alfanumerici, punti, virgole o -</p>
+<div id="ricerca-container" style="display: none">
+    <div class="row">
+        <p>Cerca dei programmi che:</p>
+        <div class="col s12">
+            <p> - siano in onda su questi canali</p>
+            <div class="filtro-container">
+                <p><input type="checkbox" name="filtroCanali" data="RaiUno" id="filtro-ch-RaiUno">
+                <label for="filtro-ch-RaiUno">Rai 1</label></p>
+                <p><input type="checkbox" name="filtroCanali" data="RaiDue" id="filtro-ch-RaiDue">
+                <label for="filtro-ch-RaiDue">Rai 2</label></p>
+                <p><input type="checkbox" name="filtroCanali" data="RaiTre" id="filtro-ch-RaiTre">
+                <label for="filtro-ch-RaiTre">Rai 3</label></p>
+                <p><input type="checkbox" name="filtroCanali" data="Rai4" id="filtro-ch-Rai4">
+                <label for="filtro-ch-Rai4">Rai 4</label></p>
+                <p><input type="checkbox" name="filtroCanali" data="Extra" id="filtro-ch-Extra">
+                <label for="filtro-ch-Extra">Rai 5</label></p>
+            </div>
+        </div>
+        <div class="col s12">
+            <p> - contengano questo testo nel titolo</p>
+            <div class="input-field">
+                <input id="filtroTitolo" type="text" class="validate" pattern="^[0-9a-zA-Zàèéìòù.,-]*$" title="Solo caratteri alfanumerici, punti, virgole o -">
+                <label for="filtroTitolo">Titolo</label>
+            </div>
+        </div>
+        <div class="col s12 m6">
+            <p> - contengano questo testo nella descrizione</p>
+            <div class="input-field">
+                <textarea id="filtroDescrOK" class="materialize-textarea validate" pattern="^[0-9a-zA-Zàèéìòù.,-]*$" title="Solo caratteri alfanumerici, punti, virgole o -"></textarea>
+                <label for="filtroDescrOK">Descrizione</label>
+            </div>
+        </div>
+        <div class="col s12 m6">
+            <p> - non contengano questo testo nella descrizione</p>
+            <div class="input-field">
+                <textarea id="filtroDescrNO" class="materialize-textarea validate" pattern="^[0-9a-zA-Zàèéìòù.,-]*$" title="Solo caratteri alfanumerici, punti, virgole o -"></textarea>
+                <label for="filtroDescrNO">Descrizione</label>
+            </div>
+        </div>
+        <div class="col s12 m6">
+            <p> - appartengano a uno di questi macrogeneri</p>
+            <div class="filtro-container">
+                <p><input type="checkbox" name="filtroMacrogen" id="filtro-macGen1" data="informazione">
+                <label for="filtro-macGen1">Informazione</label></p>
+                <p><input type="checkbox" name="filtroMacrogen" id="filtro-macGen2" data="intrattenimento">
+                <label for="filtro-macGen2">Intrattenimento</label></p>
+                <p><input type="checkbox" name="filtroMacrogen" id="filtro-macGen3" data="societa e diritti">
+                <label for="filtro-macGen3">Societ&agrave; e diritti</label></p>
+                <p><input type="checkbox" name="filtroMacrogen" id="filtro-macGen4" data="musica">
+                <label for="filtro-macGen4">Musica</label></p>
+                <p><input type="checkbox" name="filtroMacrogen" id="filtro-macGen5" data="cultura">
+                <label for="filtro-macGen5">Cultura</label></p>
+                <p><input type="checkbox" name="filtroMacrogen" id="filtro-macGen6" data="bambini">
+                <label for="filtro-macGen6">Bambini</label></p>
+                <p><input type="checkbox" name="filtroMacrogen" id="filtro-macGen7" data="fiction">
+                <label for="filtro-macGen7">Fiction</label></p>
+                <p><input type="checkbox" name="filtroMacrogen" id="filtro-macGen8" data="istituzioni">
+                <label for="filtro-macGen8">Istituzioni</label></p>
+                <p><input type="checkbox" name="filtroMacrogen" id="filtro-macGen9" data="sport">
+                <label for="filtro-macGen9">Sport</label></p>
+                <p><input type="checkbox" name="filtroMacrogen" id="filtro-macGen10" data="scienza e natura">
+                <label for="filtro-macGen10">Scienza e natura</label></p>
+                <p><input type="checkbox" name="filtroMacrogen" id="filtro-macGen11" data="rubrichetg3">
+                <label for="filtro-macGen11">Rubriche TG 3</label></p>
+            </div>
+        </div>
+        <div class="col s12 m6">
+            <p> - appartengano a uno di questi generi</p>
+            <div class="filtro-container">
+                <p><input type="checkbox" name="filtroGen" id="filtro-gen1" data="informazione">
+                <label for="filtro-gen1">Informazione</label></p>
+                <p><input type="checkbox" name="filtroGen" id="filtro-gen2" data="meteo">
+                <label for="filtro-gen2">Meteo</label></p>
+                <p><input type="checkbox" name="filtroGen" id="filtro-gen3" data="societa e diritti">
+                <label for="filtro-gen3">Societ&agrave; e diritti</label></p>
+                <p><input type="checkbox" name="filtroGen" id="filtro-gen4" data="quiz">
+                <label for="filtro-gen4">Quiz</label></p>
+                <p><input type="checkbox" name="filtroGen" id="filtro-gen5" data="intrattenimento">
+                <label for="filtro-gen5">Intrattenimento</label></p>
+                <p><input type="checkbox" name="filtroGen" id="filtro-gen6" data="musica">
+                <label for="filtro-gen6">Musica</label></p>
+                <p><input type="checkbox" name="filtroGen" id="filtro-gen7" data="talk show">
+                <label for="filtro-gen7">Talk-show</label></p>
+                <p><input type="checkbox" name="filtroGen" id="filtro-gen8" data="documentari">
+                <label for="filtro-gen8">Documentario</label></p>
+                <p><input type="checkbox" name="filtroGen" id="filtro-gen9" data="varieta">
+                <label for="filtro-gen9">Variet&agrave;</label></p>
+                <p><input type="checkbox" name="filtroGen" id="filtro-gen10" data="bambini">
+                <label for="filtro-gen10">Bambini</label></p>
+                <p><input type="checkbox" name="filtroGen" id="filtro-gen11" data="telefilm">
+                <label for="filtro-gen11">Telefilm</label></p>
+                <p><input type="checkbox" name="filtroGen" id="filtro-gen12" data="tg">
+                <label for="filtro-gen12">Telegiornale</label></p>
+                <p><input type="checkbox" name="filtroGen" id="filtro-gen13" data="istituzioni">
+                <label for="filtro-gen13">Istituzioni</label></p>
+                <p><input type="checkbox" name="filtroGen" id="filtro-gen14" data="rubrica">
+                <label for="filtro-gen14">Rubrica</label></p>
+                <p><input type="checkbox" name="filtroGen" id="filtro-gen15" data="fiction">
+                <label for="filtro-gen15">Fiction</label></p>
+                <p><input type="checkbox" name="filtroGen" id="filtro-gen16" data="film">
+                <label for="filtro-gen16">Film</label></p>
+                <p><input type="checkbox" name="filtroGen" id="filtro-gen17" data="rubrica tg">
+                <label for="filtro-gen17">Rubrica TG</label></p>
+                <p><input type="checkbox" name="filtroGen" id="filtro-gen18" data="scienza e natura">
+                <label for="filtro-gen18">Scienza e natura</label></p>
+                <p><input type="checkbox" name="filtroGen" id="filtro-gen19" data="azione">
+                <label for="filtro-gen19">Azione</label></p>
+                <p><input type="checkbox" name="filtroGen" id="filtro-gen20" data="classica">
+                <label for="filtro-gen20">Classica</label></p>
+            </div>
+        </div>
+    </div>
+    <button id="cercaFiltri" class="btn waves-effect waves-light">Cerca <i class="mdi-action-search small right"></i></button>
+</div>
+</div>
+<!-- Modalità Wall -->
+<div id="date">
+<?php
+    for ($i = 0; $i < 7; $i = $i + 1)
+    {
+        $timestamp = time() + $i * 24 * 3600;
+        echo '<div class="data card green"><a data-timestamp="' . $timestamp . '" href="?data=' . $timestamp . '">' . date("Y-m-d", $timestamp) . '</a></div>' . "\n";
+    }
+?>
+</div>
+
+<div id="wall-container">
     <div id="channels">
         
     </div>
@@ -114,7 +237,6 @@
         <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Chiudi</a>
     </div>
 </div>
-
 <script>
 
 /*
@@ -149,6 +271,10 @@ var timestamp = <?= $_GET['data'];?>;
 // Canali da mostrare.
 var myChannels = [<?php
 if (! isset ($_GET['channels']))
+{
+    $_GET['channels'] = "RaiUno,RaiDue,RaiTre,Rai4,Extra";
+}
+else if ($_GET['channels'] == "")
 {
     $_GET['channels'] = "RaiUno,RaiDue,RaiTre,Rai4,Extra";
 }
@@ -235,6 +361,7 @@ filtroTitolo,
 filtroDescrizioneOK,
 filtroDescrizioneNO
 ];
+
 </script>
 
 <script src="wall.js"></script>

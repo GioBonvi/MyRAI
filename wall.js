@@ -43,6 +43,9 @@ for (ch of myChannels)
         var divContent = $('<div class="wall-prg-content"></div>').append(titolo).append("<br>").append(genere).append("<br>").append(inizio);
         var prgDiv = $('<div data-n="' + i + '" class="wall-prg card z-depth-3" style="min-height:' + prg.durata * em_min + 'em"></div>').append(divImg).append(divContent);
         $('.wall-hour[data-start="' + Math.floor(prg.inizio / 60) * 60 + '"] .wall-ch[data-ch="' + ch + '"]').append(prgDiv);
+        
+        // DEBUG
+        console.log(prg.genere);
     }
 }
 
@@ -78,7 +81,10 @@ $(".wall-prg").click(function() {
     $("#modalDetails").openModal();
 });
 
-$("#preloader").removeClass("active");
-$("#wall-container").show();
+$("#preloader").remove();
+$("main").show();
 
+
+// DEBUG
+console.log(allChannelsData);
 });
