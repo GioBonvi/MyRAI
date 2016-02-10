@@ -41,7 +41,9 @@
 <h3>My RAI</h3>
 <p>Puoi effettuare una ricerca di uno specifico canale cliccando qui:</p>
 <button class="btn waves-effect waves-light" onclick="$('#ricerca-container').toggle('medium');">Mostra <i class="mdi-action-search small right"></i></button>
-<p>NB: Non inserire caratteri che non siano alfanumerici, punti, virgole o -</p>
+<p>NB:<br>
+ - Non inserire caratteri che non siano alfanumerici, punti, virgole o -<br>
+ - Lascia vuoto un campo per ignorare il filtro corrispondente</p>
 <div id="ricerca-container" style="display: none">
     <div class="row">
         <p>Cerca dei programmi che:</p>
@@ -60,7 +62,24 @@
                 <label for="filtro-ch-Extra">Rai 5</label></p>
             </div>
         </div>
-        <div class="col s12">
+        <div class="col s12 m6">
+            <p> - siano in onda in questa data</p>
+            <div class="input-field">
+                <select id="filtroData">
+                    <option value="" selected></option>
+                    <?php
+                    for ($i = 0; $i < 7; $i = $i + 1)
+                    {
+                        $timestamp = time() + $i * 24 * 3600;
+                        echo '<option value="' . $timestamp . '">' . date("d-m-Y", $timestamp) . '</option>' . "\n";
+                    }
+                    ?>
+                </select>
+                <label>Scegli una data</label>
+                <script>$('select').material_select();</script>
+            </div>
+        </div>
+        <div class="col s12 m6">
             <p> - contengano questo testo nel titolo</p>
             <div class="input-field">
                 <input id="filtroTitolo" type="text" class="validate" pattern="^[0-9a-zA-Zàèéìòù.,-]*$" title="Solo caratteri alfanumerici, punti, virgole o -">
@@ -163,7 +182,7 @@
     for ($i = 0; $i < 7; $i = $i + 1)
     {
         $timestamp = time() + $i * 24 * 3600;
-        echo '<div class="data card green"><a data-timestamp="' . $timestamp . '" href="?data=' . $timestamp . '">' . date("Y-m-d", $timestamp) . '</a></div>' . "\n";
+        echo '<div class="data card green"><a data-timestamp="' . $timestamp . '" href="?data=' . $timestamp . '">' . date("d-m-Y", $timestamp) . '</a></div>' . "\n";
     }
 ?>
 </div>
@@ -220,6 +239,9 @@
     <div class="wall-hour" data-start="240"></div>
     <div class="wall-hour-divider" data-ora="05:00"></div>
     <div class="wall-hour" data-start="300"></div>
+    <div id="noPrograms">
+        <h5>Sembra che non ci siano programmi corrispondenti a questa ricerca...</h5>
+    </div>
 </div>
 
 </main>

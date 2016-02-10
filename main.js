@@ -19,14 +19,17 @@ $(document).ready(function() {
             myFiltroMacGen = myFiltroMacGen + $(this).attr("data") + ",";
         });
         
+        var myFiltroData = $('select#filtroData').val();        
         
         var dataURL = "?" +
                         "channels=" + channels +
+                        "&data=" + myFiltroData +
                         "&titolo=" + myFiltroTitolo +
                         "&macrogenere=" + myFiltroMacGen +
                         "&genere=" + myFiltroGen +
                         "&descrOK=" + myFiltroDescrOK +
                         "&descrNO=" + myFiltroDescrNO;
+                        
         window.location = dataURL;
     });
 });

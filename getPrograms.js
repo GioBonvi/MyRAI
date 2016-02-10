@@ -150,13 +150,12 @@ function getChannelData(ch, data, filtri)
         async: false
     });
     var res = [];
-    for (prog of channelData)
-    {
+    channelData.forEach(function(prog) {
         if(prog.isOK)
         {
             res.push(prog);
         }
-    }
+    });
     return res;
 }
 
