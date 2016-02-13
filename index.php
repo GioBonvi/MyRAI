@@ -264,10 +264,10 @@ else
 ?>
 
 
-<div id="list-container">
-    <div id="list-channels">
+<div id="list">
+    <div id="channels">
     </div>
-    <div id="list-inner-container">
+    <div id="inner-container">
     </div>
 
 </div>

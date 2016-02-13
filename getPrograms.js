@@ -7,8 +7,10 @@
  *  titolo
  *  id
  *  inizio (in minuti trascorsi dalla mezzanotte)
+ *  fine (in minuti trascorsi dalla mezzanotte)
  *  durata (in minuti)
  *  link (non sempre specificato - una pagina dedicata della RAI sul programma)
+ *  linkRAITV (non sempre specificato - registrazioni del programma)
  *  descrizione (non sempre specificata)
  *  macrogenere (non sempre specificato)
  *  genere (non sempre sepcificato)
@@ -48,7 +50,11 @@ function getChannelData(ch, data, filtri)
                     
                     prg.link = $(".info a", val).attr("href");
                     // Se il link non esiste la variabile è 'undefined'.
-                    prg.link = (typeof prg.link === 'undefined') ? "" :prg.link.replace("http://", "");
+                    prg.link = (typeof prg.link === 'undefined') ? "" : "http://" + prg.link.replace("http://", "");
+                    
+                    prg.linkRAITV = $("div.eventDescription", val).attr("data-linkraitv");
+                    // Se il link non esiste la variabile è vuota.
+                    prg.linkRAITV = (prg.linkRAITV == "") ? "" : "http://" + prg.linkRAITV.replace("http://", "");
                     
                     prg.descrizione = $("div.eventDescription", val).html();
                     prg.descrizione = prg.descrizione.replace(new RegExp("<span.*span>\n", "g"), "");
@@ -87,6 +93,7 @@ function getChannelData(ch, data, filtri)
                     
                     var lastPrg = channelData[channelData.length - 1];
                     lastPrg.durata = getDiff(lastPrg.inizio, prg.inizio);
+                    lastPrg.fine = prg.inizio;
 
                     // Possono comparire programmi dupicati per errore.
                     if (lastPrg.inizio == prg.inizio && lastPrg.id == prg.id)
@@ -180,8 +187,8 @@ function getDiff(oraPrima, oraDopo)
 function minutiToOra(total)
 {
     var ore = Math.floor(total/60);
-    ore = ore < 9 ? '0' + ore : ore;
+    ore = ore <= 9 ? '0' + ore : ore;
     var minuti = total % 60;
-    minuti = minuti < 9 ? '0' + minuti : minuti;
+    minuti = minuti <= 9 ? '0' + minuti : minuti;
     return (ore + ":" + minuti);
 }

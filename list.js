@@ -17,17 +17,33 @@ myChannels.forEach(function(ch) {
     // A causa dei filtri alcuni canali possono risultare vuoti (senza programmi)
     if (chData.length > 0)
     {
-        $("#list-container #list-channels").append('<img class="list-ch-logo card" src="img/' + ch + '_100.jpg">');
+        allChannelsData[ch] = chData;
+        $("#list #channels").append('<img class="ch-logo card" src="img/' + ch + '_100.jpg">');
         
-        var channel = $('<div class="list-ch" data-ch="' + ch + '"></div>');
+        var channel = $('<div class="ch" data-ch="' + ch + '"></div>');
         
-        var chHeader = '<div class="list-ch-header" data-ch="' + ch + '"><img class="list-ch-header-logo" src="img/' + ch + '_100.jpg"><h5 class="list-ch-header-text">Rai Uno</h5></div>';
-        var chBody = $('<div class="list-ch-body" data-ch="' + ch + '"></div>');
+        var chHeader = '<div class="ch-header" data-ch="' + ch + '"><img class="ch-logo" src="img/' + ch + '_100.jpg"><h5 class="ch-header-text">Rai Uno</h5></div>';
+        var chBody = $('<div class="ch-body" data-ch="' + ch + '"></div>');
         
-        chBody.append('<div class="list-ch-prev"><span class="list-ch-titolo">' + ch.titolo + '</span></div>');
-        
+        for (var i = 0; i < chData.length; i = i + 1)
+        {
+            prg = chData[i];
+            var titolo = '<span class="titolo">' + prg.titolo + '</span>';
+            var durata = '<span class="durata">' + minutiToOra(prg.inizio) + '/' + minutiToOra(prg.fine) + '</span>';
+            var genere = '<span class="genere">' + prg.prettygenere + '</span>';
+            
+            var prgPrev = '<div class="prg-preview">' + durata + ' ' + titolo + ' - ' + genere + '</div>';
+            
+            var img = '<img src="' + prg.immagine + '">';
+            var link = (prg.link != "" ? '<a href="' + prg.link + '">Pagina dedicata</a>' : "");
+            var linkRAITV = (prg.linkRAITV != "" ? '<a href="' + prg.linkRAITV + '">Episodi registrati</a>' : "");
+            var descr = '<div class="descrizione">' + prg.descrizione + '<br>' +  link + '&nbsp;&nbsp;&nbsp;' + linkRAITV + ' </div>';
+            var prgMore = '<div class="prg-more" style="display: none">' + img + descr + '</div>';
+            
+            chBody.append('<div class="prg">' + prgPrev + prgMore + '</div>');
+        }
         channel.append(chHeader).append(chBody);
-        $("#list-inner-container").append(channel);
+        $("#inner-container").append(channel);
         
         /*
         // Se c'è almeno un programma...
@@ -64,6 +80,9 @@ myChannels.forEach(function(ch) {
         */
     }
     
+    $(".prg").unbind().click(function() {
+        $(this).find(".prg-more").toggle("medium");
+    });
     
     $("#preloader").remove();
     $("main").show();

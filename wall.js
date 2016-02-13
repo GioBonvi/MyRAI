@@ -36,7 +36,7 @@ myChannels.forEach(function(ch) {
             // Se il programma dura troppo poco l'immagine viene nascosta per fare spazio al testo.
             var divImg = divImg = $('<div class="prg-img"></div>').append('<img src="' + prg.immagine + '" ' + ((prg.durata * em_min) < 10 ? "hidden" : "") + '>');
             
-            var titolo = '<span class="titolo"><a ' + (prg.link != "" ? 'href="http://' + prg.link + '" target="_blank"' : "") + '>' + prg.titolo + '</a></span>';
+            var titolo = '<span class="titolo"><a ' + (prg.link != "" ? 'href=' + prg.link + '" target="_blank"' : "") + '>' + prg.titolo + '</a></span>';
             
             var genere = "";
             if(prg.prettygenere != "")
