@@ -199,58 +199,58 @@ if ($mode != "list")
 // Modalità WALL
 ?>
 
-<div id="wall-container">
-    <div id="wall-channels">
+<div id="wall">
+    <div id="channels">
         
     </div>
-    <div class="wall-hour-divider" data-ora="06:00"></div>
-    <div class="wall-hour" data-start="360"></div>
-    <div class="wall-hour-divider" data-ora="07:00"></div>
-    <div class="wall-hour" data-start="420"></div>
-    <div class="wall-hour-divider" data-ora="08:00"></div>
-    <div class="wall-hour" data-start="480"></div>
-    <div class="wall-hour-divider" data-ora="09:00"></div>
-    <div class="wall-hour" data-start="540"></div>
-    <div class="wall-hour-divider" data-ora="10:00"></div>
-    <div class="wall-hour" data-start="600"></div>
-    <div class="wall-hour-divider" data-ora="11:00"></div>
-    <div class="wall-hour" data-start="660"></div>
-    <div class="wall-hour-divider" data-ora="12:00"></div>
-    <div class="wall-hour" data-start="720"></div>
-    <div class="wall-hour-divider" data-ora="13:00"></div>
-    <div class="wall-hour" data-start="780"></div>
-    <div class="wall-hour-divider" data-ora="14:00"></div>
-    <div class="wall-hour" data-start="840"></div>
-    <div class="wall-hour-divider" data-ora="15:00"></div>
-    <div class="wall-hour" data-start="900"></div>
-    <div class="wall-hour-divider" data-ora="16:00"></div>
-    <div class="wall-hour" data-start="960"></div>
-    <div class="wall-hour-divider" data-ora="17:00"></div>
-    <div class="wall-hour" data-start="1020"></div>
-    <div class="wall-hour-divider" data-ora="18:00"></div>
-    <div class="wall-hour" data-start="1080"></div>
-    <div class="wall-hour-divider" data-ora="19:00"></div>
-    <div class="wall-hour" data-start="1140"></div>
-    <div class="wall-hour-divider" data-ora="20:00"></div>
-    <div class="wall-hour" data-start="1200"></div>
-    <div class="wall-hour-divider" data-ora="21:00"></div>
-    <div class="wall-hour" data-start="1260"></div>
-    <div class="wall-hour-divider" data-ora="22:00"></div>
-    <div class="wall-hour" data-start="1320"></div>
-    <div class="wall-hour-divider" data-ora="23:00"></div>
-    <div class="wall-hour" data-start="1380"></div>
-    <div class="wall-hour-divider" data-ora="00:00"></div>
-    <div class="wall-hour" data-start="0"></div>
-    <div class="wall-hour-divider" data-ora="01:00"></div>
-    <div class="wall-hour" data-start="60"></div>
-    <div class="wall-hour-divider" data-ora="02:00"></div>
-    <div class="wall-hour" data-start="120"></div>
-    <div class="wall-hour-divider" data-ora="03:00"></div>
-    <div class="wall-hour" data-start="180"></div>
-    <div class="wall-hour-divider" data-ora="04:00"></div>
-    <div class="wall-hour" data-start="240"></div>
-    <div class="wall-hour-divider" data-ora="05:00"></div>
-    <div class="wall-hour" data-start="300"></div>
+    <div class="hour-divider" data-ora="06:00"></div>
+    <div class="hour" data-start="360"></div>
+    <div class="hour-divider" data-ora="07:00"></div>
+    <div class="hour" data-start="420"></div>
+    <div class="hour-divider" data-ora="08:00"></div>
+    <div class="hour" data-start="480"></div>
+    <div class="hour-divider" data-ora="09:00"></div>
+    <div class="hour" data-start="540"></div>
+    <div class="hour-divider" data-ora="10:00"></div>
+    <div class="hour" data-start="600"></div>
+    <div class="hour-divider" data-ora="11:00"></div>
+    <div class="hour" data-start="660"></div>
+    <div class="hour-divider" data-ora="12:00"></div>
+    <div class="hour" data-start="720"></div>
+    <div class="hour-divider" data-ora="13:00"></div>
+    <div class="hour" data-start="780"></div>
+    <div class="hour-divider" data-ora="14:00"></div>
+    <div class="hour" data-start="840"></div>
+    <div class="hour-divider" data-ora="15:00"></div>
+    <div class="hour" data-start="900"></div>
+    <div class="hour-divider" data-ora="16:00"></div>
+    <div class="hour" data-start="960"></div>
+    <div class="hour-divider" data-ora="17:00"></div>
+    <div class="hour" data-start="1020"></div>
+    <div class="hour-divider" data-ora="18:00"></div>
+    <div class="hour" data-start="1080"></div>
+    <div class="hour-divider" data-ora="19:00"></div>
+    <div class="hour" data-start="1140"></div>
+    <div class="hour-divider" data-ora="20:00"></div>
+    <div class="hour" data-start="1200"></div>
+    <div class="hour-divider" data-ora="21:00"></div>
+    <div class="hour" data-start="1260"></div>
+    <div class="hour-divider" data-ora="22:00"></div>
+    <div class="hour" data-start="1320"></div>
+    <div class="hour-divider" data-ora="23:00"></div>
+    <div class="hour" data-start="1380"></div>
+    <div class="hour-divider" data-ora="00:00"></div>
+    <div class="hour" data-start="0"></div>
+    <div class="hour-divider" data-ora="01:00"></div>
+    <div class="hour" data-start="60"></div>
+    <div class="hour-divider" data-ora="02:00"></div>
+    <div class="hour" data-start="120"></div>
+    <div class="hour-divider" data-ora="03:00"></div>
+    <div class="hour" data-start="180"></div>
+    <div class="hour-divider" data-ora="04:00"></div>
+    <div class="hour" data-start="240"></div>
+    <div class="hour-divider" data-ora="05:00"></div>
+    <div class="hour" data-start="300"></div>
     <div id="noPrograms">
         <h5>Sembra che non ci siano programmi corrispondenti a questa ricerca...</h5>
     </div>

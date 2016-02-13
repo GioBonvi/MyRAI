@@ -1,4 +1,4 @@
-#wall-container {
+#wall {
     margin-top: 1em;
     display: block;
     border: 1em solid black;
@@ -13,14 +13,14 @@
     text-align: center;
 }
 
-#wall-container #wall-channels {
+#wall #channels {
     display: -moz-flex;
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
 }
 
-#wall-container #wall-channels .wall-ch-logo {
+#wall .ch-logo {
     -webkit-flex: 0 0 8em;
     -mox-flex: 0 0 8em;
     -ms-flex: 0 0 8em;
@@ -28,14 +28,14 @@
     margin: 0.7em;
 }
 
-.wall-hour {
+#wall .hour {
     display: -webkit-box;
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
 }
 
-.wall-hour-divider {    
+#wall .hour-divider {    
     display: -webkit-box;
     display: -ms-flexbox;
     display: -moz-flexbox;
@@ -43,7 +43,7 @@
     display: flex;
 }
 
-.wall-hour-divider > span {
+#wall .hour-divider > span {
     border: gray solid 0.5px;
     border-left: 0;
     border-right: 0;
@@ -55,7 +55,7 @@
     margin: 0 0.7em;
 }
 
-.wall-ch {
+#wall .ch {
     -webkit-flex: 0 0 8em;
     -mox-flex: 0 0 8em;
     -ms-flex: 0 0 8em;
@@ -75,79 +75,75 @@
     margin: 0.7em;
 }
 
-img.wall-ch-logo {
+#wall img.ch-logo {
     width: 8em;
     height: auto;
 }
 
-.wall-ch > .wall-prg {
+#wall .ch > .prg {
     width: 100%;
     overflow: hidden;
 }
 
-.wall-prg > .wall-prg-img{
+#wall .prg > .prg-img{
     width: 100%;
     margin: 0;
     display: block;
 }
 
-.wall-prg-img > img {
+#wall .prg-img > img {
     width: 100%;
     height: auto;
 }
 
-.wall-prg > .wall-prg-content{
+#wall .prg > .prg-content{
     width: 100%;
     padding: 0.3em 0.7em;
     display: block;
     font-size: 0.9em;
 }
 
-.wall-prg-content > span.titolo {
-    font-weight: bold;
-}
-
-.wall-prg-content > span.genere {
+#wall .prg-content > span.genere {
     font-style: italic;
 }
 
 /*COLORI CANALI*/
-.wall-ch[data-ch="RaiUno"] > .wall-prg {
+#wall .ch[data-ch="RaiUno"] > .prg {
     color: #FFFFFF;
     background-color: #0056A5;
 }
-.wall-ch[data-ch="RaiUno"] a {
+#wall .ch[data-ch="RaiUno"] a {
     color: #FFFFFF;
 }
 
-.wall-ch[data-ch="RaiDue"] > .wall-prg {
+#wall .ch[data-ch="RaiDue"] > .prg {
     color: #FFFFFF;
     background-color: #bf2314;
 }
-.wall-ch[data-ch="RaiDue"] a {
+#wall .ch[data-ch="RaiDue"] a {
     color: #FFFFFF;
 }
 
-.wall-ch[data-ch="RaiTre"] > .wall-prg {
+#wall .ch[data-ch="RaiTre"] > .prg {
     color: #FFFFFF;
     background-color: #008c00;
 }
-.wall-ch[data-ch="RaiTre"] a {
+#wall .ch[data-ch="RaiTre"] a {
     color: #FFFFFF;
 }
 
-.wall-ch[data-ch="Rai4"] > .wall-prg {
+#wall .ch[data-ch="Rai4"] > .prg {
     color: #FFFFFF;
     background-color: #d700ff;
 }
-.wall-ch[data-ch="Rai4"] a {
+#wall .ch[data-ch="Rai4"] a {
     color: #FFFFFF;
 }
 
-.wall-ch[data-ch="Extra"] > .wall-prg {
+#wall .ch[data-ch="Extra"] > .prg {
     color: #FFFFFF;
     background-color: #ff6600;
 }
-.wall-ch[data-ch="Extra"] a {
+#wall .ch[data-ch="Extra"] a {
     color: #FFFFFF;
 }

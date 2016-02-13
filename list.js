@@ -24,6 +24,8 @@ myChannels.forEach(function(ch) {
         var chHeader = '<div class="list-ch-header" data-ch="' + ch + '"><img class="list-ch-header-logo" src="img/' + ch + '_100.jpg"><h5 class="list-ch-header-text">Rai Uno</h5></div>';
         var chBody = $('<div class="list-ch-body" data-ch="' + ch + '"></div>');
         
+        chBody.append('<div class="list-ch-prev"><span class="list-ch-titolo">' + ch.titolo + '</span></div>');
+        
         channel.append(chHeader).append(chBody);
         $("#list-inner-container").append(channel);
         
