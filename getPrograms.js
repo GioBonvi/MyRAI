@@ -47,6 +47,9 @@ function getChannelData(ch, data, filtri)
                     prg.inizio = (parseInt(inizio[0]) * 10 + parseInt(inizio[1])) * 60 + parseInt(inizio[3]) * 10 + parseInt(inizio[4]);
                     
                     prg.link = $(".info a", val).attr("href");
+                    // Se il link non esiste la variabile è 'undefined'.
+                    prg.link = (typeof prg.link === 'undefined') ? "" :prg.link.replace("http://", "");
+                    
                     prg.descrizione = $("div.eventDescription", val).html();
                     prg.descrizione = prg.descrizione.replace(new RegExp("<span.*span>\n", "g"), "");
                     if (prg.descrizione == "\n")
@@ -83,20 +86,13 @@ function getChannelData(ch, data, filtri)
                     prg.immagine = prg.immagine == "" ? "img/" + ch + "_100.jpg" : prg.immagine;
                     
                     var lastPrg = channelData[channelData.length - 1];
-                    prg.durata = getDiff(lastPrg.inizio, prg.inizio);
+                    lastPrg.durata = getDiff(lastPrg.inizio, prg.inizio);
 
                     // Possono comparire programmi dupicati per errore.
                     if (lastPrg.inizio == prg.inizio && lastPrg.id == prg.id)
                     {
                         // Rimuovi il vecchio.
                         channelData.pop();
-                    }
-                    
-                    // Alcune volte il programma è segnato alle 6:00, ma è alla fine della giornata e non all'inizio.
-                    // Per evitarre dubbi viene spostato alle 5:59.
-                    if (prg.inizio == 360 && lastPrg.inizio < 360)
-                    {
-                        prg.inizio = prg.inizio - 1;
                     }
                     
                     // Test genere.
@@ -143,8 +139,14 @@ function getChannelData(ch, data, filtri)
                     
                     prg.isOK = prg.testGen && prg.testMacGen && prg.testTit && prg.testDescOK && prg.testDescNO;
                     
-                    // Aggiungi il nuovo programma.
-                    channelData.push(prg);
+                    // Alcune volte il programma è segnato alle 6:00, ma è alla fine della giornata e non all'inizio.
+                    // in questo caso viene ignorato (fa parte del giorno successivo)
+                    if (! (prg.inizio == 360 && lastPrg.inizio < 360))
+                    {
+                        // Aggiungi il nuovo programma.
+                        channelData.push(prg);
+                    }
+                    
                 });
             },
         async: false

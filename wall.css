@@ -1,10 +1,3 @@
-body, main {
-    height: 100%;
-    font-size: 100%;
-}
-
-
-
 #wall-container {
     margin-top: 1em;
     display: block;
@@ -20,14 +13,14 @@ body, main {
     text-align: center;
 }
 
-#wall-container #channels {
+#wall-container #wall-channels {
     display: -moz-flex;
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
 }
 
-#wall-container #channels .wall-ch-logo {
+#wall-container #wall-channels .wall-ch-logo {
     -webkit-flex: 0 0 8em;
     -mox-flex: 0 0 8em;
     -ms-flex: 0 0 8em;

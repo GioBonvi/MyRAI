@@ -1,7 +1,5 @@
-$(document).ready(function() {
-
 // Adattamento della grafica allo schermo.
-$("#wall-container").height(window.innerHeight - $("#wall-date").height());
+$("#list-container").height(window.innerHeight - $("#wall-date").height());
 
 // Qui  vengono salvate le info di tutti i programmi.
 var allChannelsData = {RaiUno: "", RaiDue: "", RaiTre: "", Rai4: "", Extra: ""};
@@ -19,6 +17,17 @@ myChannels.forEach(function(ch) {
     // A causa dei filtri alcuni canali possono risultare vuoti (senza programmi)
     if (chData.length > 0)
     {
+        $("#list-container #list-channels").append('<img class="list-ch-logo card" src="img/' + ch + '_100.jpg">');
+        
+        var channel = $('<div class="list-ch" data-ch="' + ch + '"></div>');
+        
+        var chHeader = '<div class="list-ch-header" data-ch="' + ch + '"><img class="list-ch-header-logo" src="img/' + ch + '_100.jpg"><h5 class="list-ch-header-text">Rai Uno</h5></div>';
+        var chBody = $('<div class="list-ch-body" data-ch="' + ch + '"></div>');
+        
+        channel.append(chHeader).append(chBody);
+        $("#list-inner-container").append(channel);
+        
+        /*
         // Se c'è almeno un programma...
         $("#noPrograms").remove();
         
@@ -33,10 +42,10 @@ myChannels.forEach(function(ch) {
         {
             var prg = chData[i];
             
-            // Se il programma dura troppo poco l'immagine viene nascosta per fare spazio al testo.
+            // Se il programma dura troppo poco l'immagine viene nascosta per fare spaizo al testo.
             var divImg = divImg = $('<div class="wall-prg-img"></div>').append('<img src="' + prg.immagine + '" ' + ((prg.durata * em_min) < 10 ? "hidden" : "") + '>');
             
-            var titolo = '<span class="titolo"><a ' + (prg.link != "" ? 'href="http://' + prg.link + '" target="_blank"' : "") + '>' + prg.titolo + '</a></span>';
+            var titolo = '<span class="titolo"><a ' + (link != "" ? 'href="http://' + link + '" target="_blank"' : "") + '>' + prg.titolo + '</a></span>';
             
             var genere = "";
             if(prg.prettygenere != "")
@@ -50,41 +59,10 @@ myChannels.forEach(function(ch) {
             $('.wall-hour[data-start="' + Math.floor(prg.inizio / 60) * 60 + '"] .wall-ch[data-ch="' + ch + '"]').append(prgDiv);
             
         }
+        */
     }
-});
-
-$(".wall-hour").each(function() {
-    // Rimuovi tutte le ore che non contengono programmazione.
-    $allChildren = $(this).children();
-    $allEmptyChildren = $allChildren.filter(':empty');
-    if ($allChildren.length == $allEmptyChildren.length)
-    {
-        $(this).prev().remove();
-        $(this).remove();
-    }
-});
-
-$(".wall-prg").click(function() {
-    channelNames = {
-        RaiUno: "Rai Uno",
-        RaiDue: "Rai Due",
-        RaiTre: "Rai Tre",
-        Rai4: "Rai Quattro",
-        Extra: "Rai Cinque"
-    };
     
-    var channel = $(this).parent().attr("data-ch");
-    var n = $(this).attr("data-n");
-    var prog = allChannelsData[channel][n];
-    $("#modal-ch").html(channelNames[channel]);
-    $("#modal-titolo").html(prog.titolo);    
-    $("#modal-genere").html(prog.prettygenere);
-    $("#modal-inizio").html(minutiToOra(prog.inizio));
-    $("#modal-descrizione").html(prog.descrizione);
-    $("#modal-img").attr("src", prog.immagine);
-    $("#modalDetails").openModal();
-});
-
-$("#preloader").remove();
-$("main").show();
+    
+    $("#preloader").remove();
+    $("main").show();
 });

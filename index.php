@@ -10,6 +10,7 @@
     <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
     <link type="text/css" rel="stylesheet" href="main.css">
     <link type="text/css" rel="stylesheet" href="wall.css">
+    <link type="text/css" rel="stylesheet" href="list.css">
 
     <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
@@ -17,6 +18,10 @@
     <script src="getPrograms.js"></script>
 </head>
 <body>
+
+<?php
+$mode = ($_GET['mode'] == "list" ? "list" : "wall");
+?>
 
 <div id="preloader-container">
     <div id="preloader" class="preloader-wrapper big active">
@@ -176,7 +181,7 @@
     <button id="cercaFiltri" class="btn waves-effect waves-light">Cerca <i class="mdi-action-search small right"></i></button>
 </div>
 </div>
-<!-- Modalità Wall -->
+
 <div id="date">
 <?php
     for ($i = 0; $i < 7; $i = $i + 1)
@@ -187,8 +192,15 @@
 ?>
 </div>
 
+<?php
+
+if ($mode != "list")
+{
+// Modalità WALL
+?>
+
 <div id="wall-container">
-    <div id="channels">
+    <div id="wall-channels">
         
     </div>
     <div class="wall-hour-divider" data-ora="06:00"></div>
@@ -243,7 +255,29 @@
         <h5>Sembra che non ci siano programmi corrispondenti a questa ricerca...</h5>
     </div>
 </div>
+<?php
+}
+// Fine modalità WALL
+else
+{
+// Modalità WALL
+?>
 
+
+<div id="list-container">
+    <div id="list-channels">
+    </div>
+    <div id="list-inner-container">
+    </div>
+
+</div>
+
+
+
+<?php
+}
+// Fine modalità LIST
+?>
 </main>
 
 <!-- Popup di approfondimento con i dettagli di un programma. -->
@@ -386,7 +420,15 @@ filtroDescrizioneNO
 
 </script>
 
-<script src="wall.js"></script>
-
+<?php
+if ($mode != "list")
+{
+    echo '<script src="wall.js"></script>';
+}
+else 
+{
+    echo '<script src="list.js"></script>';
+}
+?>
 </body>
 </html>
