@@ -17,8 +17,11 @@ myChannels.forEach(function(ch) {
     // A causa dei filtri alcuni canali possono risultare vuoti (senza programmi)
     if (chData.length > 0)
     {
+         // Se c'è almeno un programma...
+        $("#noPrograms").remove();
+        
         allChannelsData[ch] = chData;
-        $("#list #channels").append('<img class="ch-logo card" src="img/' + ch + '_100.jpg">');
+        $("#list #channels").append('<img class="ch-logo card" data-ch="' + ch + '" src="img/' + ch + '_100.jpg">');
         
         var channel = $('<div class="ch" data-ch="' + ch + '"></div>');
         
@@ -40,48 +43,23 @@ myChannels.forEach(function(ch) {
             var descr = '<div class="descrizione">' + prg.descrizione + '<br>' +  link + '&nbsp;&nbsp;&nbsp;' + linkRAITV + ' </div>';
             var prgMore = '<div class="prg-more" style="display: none">' + img + descr + '</div>';
             
-            chBody.append('<div class="prg">' + prgPrev + prgMore + '</div>');
+            var d = new Date(), e = new Date(d);
+            var now = Math.floor((e - d.setHours(0,0,0,0)) / 60000);
+            var inOnda = (prg.inizio <= now && prg.fine >= now);
+            console.log(prg.inizio + " - " + now);
+            
+            chBody.append('<div class="prg' + (inOnda ? ' inonda' : '') + '">' + prgPrev + prgMore + '</div>');
         }
         channel.append(chHeader).append(chBody);
         $("#inner-container").append(channel);
-        
-        /*
-        // Se c'è almeno un programma...
-        $("#noPrograms").remove();
-        
-        $(".wall-hour-divider").each(function() {
-            $(this).append('<span>' + $(this).attr("data-ora") + '</span>');
-        });
-        $("#wall-container #wall-channels").append('<img class="wall-ch-logo card" src="img/' + ch + '_100.jpg">');
-        $(".wall-hour").append('<div class="wall-ch" data-ch="' + ch + '"></div>');
-        
-        allChannelsData[ch] = chData;
-        for (var i = 0; i < chData.length; i = i + 1)
-        {
-            var prg = chData[i];
-            
-            // Se il programma dura troppo poco l'immagine viene nascosta per fare spaizo al testo.
-            var divImg = divImg = $('<div class="wall-prg-img"></div>').append('<img src="' + prg.immagine + '" ' + ((prg.durata * em_min) < 10 ? "hidden" : "") + '>');
-            
-            var titolo = '<span class="titolo"><a ' + (link != "" ? 'href="http://' + link + '" target="_blank"' : "") + '>' + prg.titolo + '</a></span>';
-            
-            var genere = "";
-            if(prg.prettygenere != "")
-            {
-                genere = '<span class="genere">' + prg.prettygenere + '</span>';
-            }
-            
-            var inizio = '<span class="inizio">' + minutiToOra(prg.inizio) + '</span>';
-            var divContent = $('<div class="wall-prg-content"></div>').append(titolo).append("<br>").append(genere).append("<br>").append(inizio);
-            var prgDiv = $('<div data-n="' + i + '" class="wall-prg card z-depth-3" style="min-height:' + prg.durata * em_min + 'em"></div>').append(divImg).append(divContent);
-            $('.wall-hour[data-start="' + Math.floor(prg.inizio / 60) * 60 + '"] .wall-ch[data-ch="' + ch + '"]').append(prgDiv);
-            
-        }
-        */
     }
     
     $(".prg").unbind().click(function() {
         $(this).find(".prg-more").toggle("medium");
+    });
+    
+    $("#list #channels img.ch-logo").unbind().click(function() {
+        $("#inner-container").scrollTo('.ch-header[data-ch="' + $(this).attr("data-ch") + '"]');
     });
     
     $("#preloader").remove();

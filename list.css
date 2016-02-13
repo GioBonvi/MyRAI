@@ -72,12 +72,12 @@
     display: inline;
 }
 
-#list .ch-body {
-    
-}
-
 #list .prg {
     margin: 0.7em;
+}
+
+#list .prg.inonda {
+    background-color: #5a9dec;
 }
 
 #list .prg .prg-more img {

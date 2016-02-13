@@ -192,3 +192,10 @@ function minutiToOra(total)
     minuti = minuti <= 9 ? '0' + minuti : minuti;
     return (ore + ":" + minuti);
 }
+
+jQuery.fn.scrollTo = function(elem, speed) { 
+    $(this).animate({
+        scrollTop:  $(this).scrollTop() - $(this).offset().top + $(elem).offset().top 
+    }, speed == undefined ? 1000 : speed); 
+    return this; 
+};

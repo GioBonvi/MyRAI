@@ -268,8 +268,10 @@ else
     <div id="channels">
     </div>
     <div id="inner-container">
+    <div id="noPrograms">
+        <h5>Sembra che non ci siano programmi corrispondenti a questa ricerca...</h5>
     </div>
-
+    </div>
 </div>
 
 
