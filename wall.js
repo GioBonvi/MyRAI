@@ -36,7 +36,7 @@ myChannels.forEach(function(ch) {
             // Se il programma dura troppo poco l'immagine viene nascosta per fare spazio al testo.
             var divImg = divImg = $('<div class="prg-img"></div>').append('<img src="' + prg.immagine + '" ' + ((prg.durata * em_min) < 10 ? "hidden" : "") + '>');
             
-            var titolo = '<span class="titolo"><a ' + (prg.link != "" ? 'href=' + prg.link + '" target="_blank"' : "") + '>' + prg.titolo + '</a></span>';
+            var titolo = '<span class="titolo">' + prg.titolo + '</span>';
             
             var genere = "";
             if(prg.prettygenere != "")
@@ -82,6 +82,27 @@ $(".prg").click(function() {
     $("#modal-inizio").html(minutiToOra(prog.inizio));
     $("#modal-descrizione").html(prog.descrizione);
     $("#modal-img").attr("src", prog.immagine);
+    if (prog.link != "")
+    {
+        $("#modal-link").show();
+        $("#modal-link").attr("href", prog.link);
+    }
+    else
+    {
+        $("#modal-link").hide();
+        $("#modal-link").attr("href", "");
+    }
+    
+    if (prog.linkRAITV != "")
+    {
+        $("#modal-linkRAITV").show();
+        $("#modal-linkRAITV").attr("href", prog.linkRAITV);
+    }
+    else
+    {
+        $("#modal-linkRAITV").hide();
+        $("#modal-linkRAITV").attr("href", "");
+    }
     $("#modalDetails").openModal();
 });
 

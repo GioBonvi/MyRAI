@@ -288,6 +288,7 @@ else
         <span id="modal-inizio"></span>
         <br><br>
         <img id="modal-img"><p id="modal-descrizione"></p>
+       <a id="modal-link" href="">Pagina dedicata</a>&nbsp;&nbsp;&nbsp;<a id="modal-linkRAITV" href="">Episodi registrati</a>
     </div>
     <div class="modal-footer">
         <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Chiudi</a>
