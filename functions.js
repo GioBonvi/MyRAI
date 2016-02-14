@@ -180,6 +180,16 @@ function getChannelData(ch, data, filtri)
                         channelData.push(prg);
                     }
                 });
+                // La fine dell'ultimo programma va impostata "a mano" alle 6:00
+                var lastPrg = channelData[channelData.length - 1];
+                if (lastPrg.inizio == (6 * 60))
+                {
+                    lastPrg.fine = 6 * 60 + 30;
+                }
+                else
+                {
+                    lastPrg.fine = 6 * 60;
+                }
             },
         async: false
     });
