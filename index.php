@@ -44,13 +44,23 @@ $mode = ($_GET['mode'] == "list" ? "list" : "wall");
 <div class="container">
 
 <h3>My RAI</h3>
-<p>Puoi effettuare una ricerca di uno specifico canale cliccando qui:</p>
-<button class="btn waves-effect waves-light" onclick="$('#ricerca-container').toggle('medium');">Mostra <i class="mdi-action-search small right"></i></button>
+<h5 id="dataAttuale">Programmazione per la gioranta del </h5>
+<p>Puoi effettuare una ricerca dettagliata cliccando qui:</p>
+<button class="btn waves-effect waves-light" id="btnMostra">Mostra</button>
 <p>NB:<br>
  - Non inserire caratteri che non siano alfanumerici, punti, virgole o -<br>
  - Lascia vuoto un campo per ignorare il filtro corrispondente</p>
 <div id="ricerca-container" style="display: none">
     <div class="row">
+        <div class="switch">
+            <p>Modalit&agrave; di visualizzazione:</p>
+            <label>
+                Wall
+                <input type="checkbox" id="chkModeList">
+                <span class="lever"></span>
+                List
+            </label>
+        </div>
         <p>Cerca dei programmi che:</p>
         <div class="col s12">
             <p> - siano in onda su questi canali</p>
@@ -187,7 +197,7 @@ $mode = ($_GET['mode'] == "list" ? "list" : "wall");
     for ($i = 0; $i < 7; $i = $i + 1)
     {
         $timestamp = time() + $i * 24 * 3600;
-        echo '<div class="data card green"><a data-timestamp="' . $timestamp . '" href="?data=' . $timestamp . '">' . date("d-m-Y", $timestamp) . '</a></div>' . "\n";
+        echo '<div class="data card green"><a data-timestamp="' . $timestamp . '" href="?mode=' . $mode . '&data=' . $timestamp . '">' . date("d-m-Y", $timestamp) . '</a></div>' . "\n";
     }
 ?>
 </div>
@@ -298,14 +308,18 @@ else
 </div>
 <script>
 
-/*
- * Filtri
- *
- * Specificando opportuni parametri GET è possibie filtrare i programmi visualizzati in base a:
- *  titolo (il testo deve essere contenuto nel titolo)
- *  genere/macrogenere (corrispondenza esatta)
- *  descrizione(OK/NO) (il testo (non) deve essere contenuto nella descrizione)
- */
+$("#chkModeList").prop("checked", <?php
+
+if ($mode == "list")
+{
+    echo "true";
+}
+else
+{
+    echo "false";
+}
+
+?>);
 
 // Imposta la data attuale in base al parametro "data" nell'URL.
 var data = "<?php
@@ -323,6 +337,8 @@ else if ($_GET['data'] < time())
 }
 echo date("Y_m_d", $_GET['data']);
 ?>";
+
+$("#dataAttuale").text("Programmazione per la gioranta del " + data.replace(new RegExp("_", "g"), "-"));
 
 // Data sottoforma di timestamp UNIX;
 var timestamp = <?= $_GET['data'];?>;
@@ -347,6 +363,17 @@ foreach ($channels as $ch)
     }
 }
 ?>];
+
+
+/*
+ * Filtri
+ *
+ * Specificando opportuni parametri GET è possibie filtrare i programmi visualizzati in base a:
+ *  titolo (il testo deve essere contenuto nel titolo)
+ *  genere/macrogenere (corrispondenza esatta)
+ *  descrizione(OK/NO) (il testo (non) deve essere contenuto nella descrizione)
+ */
+
 
 // Filtro per genere.
 var filtroGenere = "<?php

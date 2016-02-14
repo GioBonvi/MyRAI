@@ -23,6 +23,7 @@ $(document).ready(function() {
         
         var dataURL = "?" +
                         "channels=" + channels +
+                        "&mode=" + ($("#chkModeList").prop("checked") ? "list" : "wall") +
                         "&data=" + myFiltroData +
                         "&titolo=" + myFiltroTitolo +
                         "&macrogenere=" + myFiltroMacGen +
@@ -31,5 +32,10 @@ $(document).ready(function() {
                         "&descrNO=" + myFiltroDescrNO;
                         
         window.location = dataURL;
+    });
+    
+    $("#btnMostra").click(function() {
+        $('#ricerca-container').toggle('medium');
+        $(this).text(($(this).text() == "Mostra" ? "Nascondi" : "Mostra"));
     });
 });
