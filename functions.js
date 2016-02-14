@@ -10,12 +10,35 @@
  *  fine (in minuti trascorsi dalla mezzanotte)
  *  durata (in minuti)
  *  link (non sempre specificato - una pagina dedicata della RAI sul programma)
- *  linkRAITV (non sempre specificato - registrazioni del programma)
+ *  linkRAITV (non sempre specificato - una pagina che raccoglie registrazioni di edizioni passate del programma)
  *  descrizione (non sempre specificata)
  *  macrogenere (non sempre specificato)
  *  genere (non sempre sepcificato)
  *  prettygenere (una combinazione ottimizzata per la lettura tipo "macrogenere - genere")
  *  immagine (non sempre specificata - un'icona del programma)
+ *  isOk (boolean - indica se il programma corrisponde ai filtri di ricerca)
+ *
+ * Per quanto riguarda i parametri:
+ *  ch
+ *      Indica il nome del canale di cui si vuole la programmazione.
+ *      Deve essere uno dei seguenti valori:
+ *          RaiUno RaiDue RaiTre Rai4 Extra
+ *  data
+ *      Indica il giorno di cui si vuole la programmazione-
+ *      Il formato deve essere rigorosamente YYYY_MM_DD
+ *  filtri
+ *      Un'array contenete eventuali filtri di ricerca.
+ *      Deve seguire questo formato:
+ *          {
+ *              genere: filtroGenere,                   // Stringa tipo "genere1,genere2,genere3,"
+ *                                                      // Vengono selezionati i programmi che corrispondono ad alemno uno dei generi.
+ *              macrogenere: filtroMacrogenere,         // Stringa tipo "macgen1,macgen2,macgen3,"
+ *                                                      // Vengono selezionati i programmi che corrispondono ad alemno uno dei macrogenerei.
+ *              titolo: filtroTitolo,                   // Una stringa. Vengono selezionati i programmi che la contengono nel titolo.
+ *              descrizioneOK: filtroDescrizioneOK,     // Una stringa. Vengono selezionati i programmi che la contengono nella descrizione.
+ *              descrizioneNO: filtroDescrizioneNO      // Una stringa. Vengono selezionati i programmi che NON la contengono nella descrizione.
+ *          }
+ *     
  */
 function getChannelData(ch, data, filtri)
 {
@@ -102,8 +125,10 @@ function getChannelData(ch, data, filtri)
                         channelData.pop();
                     }
                     
+                    // Ora applichiamo i filtri.
+                    
                     // Test genere.
-                    if (filtri[0] == "")
+                    if (filtri.genere == "")
                     {
                         // Nessun filtro stabilito -> tutti i programmi vanno bene.
                         prg.testGen = true;                        
@@ -112,7 +137,7 @@ function getChannelData(ch, data, filtri)
                     {
                         // Se c'è un filtro stabilito solo i programmi i cui generi compaiono
                         // nell'array vanno bene.
-                        var filtroGen = filtri[0].split(",");
+                        var filtroGen = filtri.genere.split(",");
                         prg.testGen = false;
                         // Escludiamo il caso in cui un programma non ha un genere.
                         if (prg.genere != "" && filtroGen.indexOf(prg.genere) != -1)
@@ -122,7 +147,7 @@ function getChannelData(ch, data, filtri)
                     }
                     
                     // Test macrogenere.
-                    if (filtri[1] == "")
+                    if (filtri.macrogenere == "")
                     {
                         // Nessun filtro stabilito -> tutti i programmi vanno bene.
                         prg.testMacGen = true;                        
@@ -131,7 +156,7 @@ function getChannelData(ch, data, filtri)
                     {
                         // Se c'è un filtro stabilito solo i programmi i cui macrogeneri compaiono
                         // nell'array vanno bene.
-                        var filtroMacGen = filtri[1].split(",");
+                        var filtroMacGen = filtri.macrogenere.split(",");
                         prg.testMacGen = false;
                         // Escludiamo il caso in cui un programma non ha un macrogenere.
                         if (prg.macrogenere != "" && filtroMacGen.indexOf(prg.macrogenere) != -1)
@@ -140,10 +165,11 @@ function getChannelData(ch, data, filtri)
                         }
                     }
                     
-                    prg.testTit = (new RegExp(filtri[2],"i")).test(prg.titolo);
-                    prg.testDescOK = (new RegExp(filtri[3],"i")).test(prg.descrizione);
-                    prg.testDescNO = filtri[4] == "" ? true : ! (new RegExp(filtri[4],"i")).test(prg.descrizione);
+                    prg.testTit = (new RegExp(filtri.titolo,"i")).test(prg.titolo);
+                    prg.testDescOK = (new RegExp(filtri.descrizioneOK,"i")).test(prg.descrizione);
+                    prg.testDescNO = filtri.descrizioneNO == "" ? true : ! (new RegExp(filtri.descrizioneNO,"i")).test(prg.descrizione);
                     
+                    // Indica se il programma corrisponde a tutti i filtri.
                     prg.isOK = prg.testGen && prg.testMacGen && prg.testTit && prg.testDescOK && prg.testDescNO;
                     
                     // Alcune volte il programma è segnato alle 6:00, ma è alla fine della giornata e non all'inizio.
@@ -153,11 +179,14 @@ function getChannelData(ch, data, filtri)
                         // Aggiungi il nuovo programma.
                         channelData.push(prg);
                     }
-                    
                 });
             },
         async: false
     });
+    /* Non è stato possibile eliminare prima i programmi non corrispondenti alla ricerca
+     * per la questione del calcolo della durata.
+     * Ora vengono selezionati solo i programmi corrispondenti.
+     */
     var res = [];
     channelData.forEach(function(prog) {
         if(prog.isOK)
@@ -193,6 +222,7 @@ function minutiToOra(total)
     return (ore + ":" + minuti);
 }
 
+// Fai scorrere un elemento in overflow fino ad un elemento "elem" al suo interno. (usato nel layout LIST)
 jQuery.fn.scrollTo = function(elem, speed) { 
     $(this).animate({
         scrollTop:  $(this).scrollTop() - $(this).offset().top + $(elem).offset().top 

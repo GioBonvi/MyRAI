@@ -8,14 +8,14 @@
     
     <link rel="stylesheet" href="http://fonts.googleapis.com/icon?family=Material+Icons">
     <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
-    <link type="text/css" rel="stylesheet" href="main.css">
-    <link type="text/css" rel="stylesheet" href="wall.css">
-    <link type="text/css" rel="stylesheet" href="list.css">
+    <link type="text/css" rel="stylesheet" href="common.css">
+    <link type="text/css" rel="stylesheet" href="wall/wall.css">
+    <link type="text/css" rel="stylesheet" href="list/list.css">
 
     <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
-    <script src="main.js"></script>
-    <script src="getPrograms.js"></script>
+    <script src="common.js"></script>
+    <script src="functions.js"></script>
 </head>
 <body>
 
@@ -194,6 +194,7 @@ $mode = ($_GET['mode'] == "wall" ? "wall" : "list");
 
 <div id="date">
 <?php
+    // Genera 7 pulsanti: uno per ogni giorno da oggi a settimana prossima.
     for ($i = 0; $i < 7; $i = $i + 1)
     {
         $timestamp = time() + $i * 24 * 3600;
@@ -270,7 +271,7 @@ if ($mode == "wall")
 // Fine modalità WALL
 else
 {
-// Modalità WALL
+// Modalità LIST
 ?>
 
 
@@ -292,7 +293,7 @@ else
 ?>
 </main>
 
-<!-- Popup di approfondimento con i dettagli di un programma. -->
+<!-- Popup di approfondimento con i dettagli di un programma (Utilizzato nella modalità WALL. -->
 <div id="modalDetails" class="modal modal-fixed-footer">
     <div class="modal-content">
         <h4><span id="modal-ch"></span> - <span id="modal-titolo"></span></h4>
@@ -306,6 +307,7 @@ else
         <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Chiudi</a>
     </div>
 </div>
+
 <script>
 // Imposta la data attuale in base al parametro "data" nell'URL.
 var data = "<?php
@@ -426,13 +428,13 @@ else if (! preg_match("/^[0-9a-zA-Zàèéìòù.,-]*$/", $_GET['descrNO']))
 echo $_GET['descrNO'];
 ?>";
 
-var filtri = [
-filtroGenere,
-filtroMacrogenere,
-filtroTitolo,
-filtroDescrizioneOK,
-filtroDescrizioneNO
-];
+var filtri = {
+genere: filtroGenere,
+macrogenere: filtroMacrogenere,
+titolo: filtroTitolo,
+descrizioneOK: filtroDescrizioneOK,
+descrizioneNO: filtroDescrizioneNO
+};
 
 
 // Popola il form di ricerca con i valori dei filtri
@@ -477,11 +479,11 @@ filtroGenere.split(",").forEach(function(gen) {
 <?php
 if ($mode == "wall")
 {
-    echo '<script src="wall.js"></script>';
+    echo '<script src="wall/wall.js"></script>';
 }
 else 
 {
-    echo '<script src="list.js"></script>';
+    echo '<script src="list/list.js"></script>';
 }
 ?>
 </body>

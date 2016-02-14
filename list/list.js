@@ -4,13 +4,6 @@ $("#list-container").height(window.innerHeight - $("#wall-date").height());
 // Qui  vengono salvate le info di tutti i programmi.
 var allChannelsData = {RaiUno: "", RaiDue: "", RaiTre: "", Rai4: "", Extra: ""};
 
-var em_min = 0.7; // Ogni minuto di trasmissione corrisponde a 0.7 em di altezza per il programma.
-/*
- * Per ogni canale viene aggiunto:
- *  il logo
- *  le ore nelle divisioni fra ore
- *  i programmi nelle ore corrispondenti
- */
 myChannels.forEach(function(ch) {
     
     var chData = getChannelData(ch, data, filtri);
@@ -46,7 +39,6 @@ myChannels.forEach(function(ch) {
             var d = new Date(), e = new Date(d);
             var now = Math.floor((e - d.setHours(0,0,0,0)) / 60000);
             var inOnda = (prg.inizio <= now && prg.fine >= now);
-            console.log(prg.inizio + " - " + now);
             
             chBody.append('<div class="prg' + (inOnda ? ' inonda' : '') + '">' + prgPrev + prgMore + '</div>');
         }
