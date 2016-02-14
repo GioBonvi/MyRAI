@@ -20,7 +20,7 @@
 <body>
 
 <?php
-$mode = ($_GET['mode'] == "list" ? "list" : "wall");
+$mode = ($_GET['mode'] == "wall" ? "wall" : "list");
 ?>
 
 <div id="preloader-container">
@@ -204,7 +204,7 @@ $mode = ($_GET['mode'] == "list" ? "list" : "wall");
 
 <?php
 
-if ($mode != "list")
+if ($mode == "wall")
 {
 // Modalità WALL
 ?>
@@ -439,13 +439,13 @@ filtroDescrizioneNO
 
 // Modalità WALL/LIST.
 $("#chkModeList").prop("checked", <?php
-    if ($mode == "list")
+    if ($mode == "wall")
     {
-        echo "true";
+        echo "false";
     }
     else
     {
-        echo "false";
+        echo "true";
     }
 ?>);
 
@@ -475,7 +475,7 @@ filtroGenere.split(",").forEach(function(gen) {
 </script>
 
 <?php
-if ($mode != "list")
+if ($mode == "wall")
 {
     echo '<script src="wall.js"></script>';
 }

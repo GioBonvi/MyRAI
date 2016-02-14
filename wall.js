@@ -52,7 +52,7 @@ myChannels.forEach(function(ch) {
         }
     }
 });
-/*
+
 $(".hour").each(function() {
     // Rimuovi tutte le ore che non contengono programmazione.
     $allChildren = $(this).children();
@@ -63,7 +63,7 @@ $(".hour").each(function() {
         $(this).remove();
     }
 });
-*/
+
 $(".prg").click(function() {
     channelNames = {
         RaiUno: "Rai Uno",
