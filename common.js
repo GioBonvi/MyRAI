@@ -36,6 +36,6 @@ $(document).ready(function() {
     
     $("#btnMostra").click(function() {
         $('#ricerca-container').toggle('medium');
-        $(this).text(($(this).text() == "Mostra" ? "Nascondi" : "Mostra"));
+        $(this).text(($(this).text() == "Ricerca" ? "Nascondi" : "Ricerca"));
     });
 });

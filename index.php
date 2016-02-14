@@ -44,9 +44,8 @@ $mode = ($_GET['mode'] == "wall" ? "wall" : "list");
 <div class="container">
 
 <h3>My RAI</h3>
-<h5 id="dataAttuale">Programmazione per la gioranta del </h5>
-<p>Puoi effettuare una ricerca dettagliata cliccando qui:</p>
-<button class="btn waves-effect waves-light" id="btnMostra">Mostra</button>
+<h5 id="dataAttuale">Programmazione per la giornata del </h5>
+<button class="btn waves-effect waves-light" id="btnMostra">Ricerca</button>
 <p>NB:<br>
  - Non inserire caratteri che non siano alfanumerici, punti, virgole o -<br>
  - Lascia vuoto un campo per ignorare il filtro corrispondente</p>
@@ -81,9 +80,9 @@ $mode = ($_GET['mode'] == "wall" ? "wall" : "list");
             <p> - siano in onda in questa data</p>
             <div class="input-field">
                 <select id="filtroData">
-                    <option value="" selected></option>
+                    <option value="" selected>Oggi</option>
                     <?php
-                    for ($i = 0; $i < 7; $i = $i + 1)
+                    for ($i = 1; $i < 7; $i = $i + 1)
                     {
                         $timestamp = time() + $i * 24 * 3600;
                         $timestamp = $timestamp - ($timestamp % (24*60 * 60));
@@ -190,7 +189,19 @@ $mode = ($_GET['mode'] == "wall" ? "wall" : "list");
     </div>
     <button id="cercaFiltri" class="btn waves-effect waves-light">Cerca <i class="mdi-action-search small right"></i></button>
 </div>
+
+
+<div>
+Se vuoi puoi tornare ad aprire questo filtro di ricerca specifico salvando nei preferiti questo link:<br><br>
+<a id="permaLink"></a>
+<script>
+$("#permaLink").attr("href", location.href).text(location.href);
+</script>
 </div>
+
+
+</div>
+
 
 <div id="date">
 <?php
