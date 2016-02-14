@@ -86,12 +86,12 @@ $mode = ($_GET['mode'] == "list" ? "list" : "wall");
                     for ($i = 0; $i < 7; $i = $i + 1)
                     {
                         $timestamp = time() + $i * 24 * 3600;
+                        $timestamp = $timestamp - ($timestamp % (24*60 * 60));
                         echo '<option value="' . $timestamp . '">' . date("d-m-Y", $timestamp) . '</option>' . "\n";
                     }
                     ?>
                 </select>
                 <label>Scegli una data</label>
-                <script>$('select').material_select();</script>
             </div>
         </div>
         <div class="col s12 m6">
@@ -307,20 +307,6 @@ else
     </div>
 </div>
 <script>
-
-$("#chkModeList").prop("checked", <?php
-
-if ($mode == "list")
-{
-    echo "true";
-}
-else
-{
-    echo "false";
-}
-
-?>);
-
 // Imposta la data attuale in base al parametro "data" nell'URL.
 var data = "<?php
 if (! isset($_GET['data']))
@@ -342,6 +328,17 @@ $("#dataAttuale").text("Programmazione per la gioranta del " + data.replace(new 
 
 // Data sottoforma di timestamp UNIX;
 var timestamp = <?= $_GET['data'];?>;
+timestamp = timestamp - (timestamp % (24*60*60));
+
+/*
+ * Filtri
+ *
+ * Specificando opportuni parametri GET è possibie filtrare i programmi visualizzati in base a:
+ *  canale di trasmissione
+ *  titolo (il testo deve essere contenuto nel titolo)
+ *  genere/macrogenere (corrispondenza esatta)
+ *  descrizione(OK/NO) (il testo (non) deve essere contenuto nella descrizione)
+ */
 
 // Canali da mostrare.
 var myChannels = [<?php
@@ -363,17 +360,6 @@ foreach ($channels as $ch)
     }
 }
 ?>];
-
-
-/*
- * Filtri
- *
- * Specificando opportuni parametri GET è possibie filtrare i programmi visualizzati in base a:
- *  titolo (il testo deve essere contenuto nel titolo)
- *  genere/macrogenere (corrispondenza esatta)
- *  descrizione(OK/NO) (il testo (non) deve essere contenuto nella descrizione)
- */
-
 
 // Filtro per genere.
 var filtroGenere = "<?php
@@ -448,6 +434,44 @@ filtroDescrizioneOK,
 filtroDescrizioneNO
 ];
 
+
+// Popola il form di ricerca con i valori dei filtri
+
+// Modalità WALL/LIST.
+$("#chkModeList").prop("checked", <?php
+    if ($mode == "list")
+    {
+        echo "true";
+    }
+    else
+    {
+        echo "false";
+    }
+?>);
+
+// Canali attivi.
+myChannels.forEach(function(ch) {
+    $("#filtro-ch-" + ch).prop("checked", true);
+});
+
+// Data in cui cercare.
+$("select#filtroData").find('option[value="' + timestamp + '"]').prop("selected", true);
+$("select#filtroData").material_select();
+
+$("#filtroTitolo").val(filtroTitolo);
+$("#filtroDescrNO").val(filtroDescrizioneNO);
+$("#filtroDescrOK").val(filtroDescrizioneOK);
+
+// Macrogeneri selezionati.
+filtroMacrogenere.split(",").forEach(function(macGen) {
+    $('input[type="checkbox"][name="filtroMacrogen"][data="' + macGen + '"]').prop("checked", true);
+});
+
+
+// Generi selezionati.
+filtroGenere.split(",").forEach(function(gen) {
+    $('input[type="checkbox"][name="filtroGen"][data="' + gen + '"]').prop("checked", true);
+});
 </script>
 
 <?php
