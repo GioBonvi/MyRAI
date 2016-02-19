@@ -1,4 +1,6 @@
 $(document).ready(function() {
+    $("body").width(window.width);    
+    
     $("#cercaFiltri").click(function() {
         var myFiltroTitolo = $("#filtroTitolo").val();
         var myFiltroDescrOK = $("#filtroDescrOK").val();
@@ -38,4 +40,7 @@ $(document).ready(function() {
         $('#ricerca-container').toggle('medium');
         $(this).text(($(this).text() == "Ricerca" ? "Nascondi" : "Ricerca"));
     });
+    
+    $("#preloader").remove();
+    $("main, footer").show();
 });

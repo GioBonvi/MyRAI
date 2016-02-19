@@ -304,6 +304,10 @@ else
 ?>
 </main>
 
+<footer hidden>
+<p>Il codice sorgente di questo progetto &egrave; disponibile sotto licenza GPL v3 in <a href="https://github.com/GioBonvi/MyRAI">questa repository di GitHub</a>.</p>
+</footer>
+
 <!-- Popup di approfondimento con i dettagli di un programma (Utilizzato nella modalità WALL. -->
 <div id="modalDetails" class="modal modal-fixed-footer">
     <div class="modal-content">
