@@ -38,7 +38,7 @@ myChannels.forEach(function(ch) {
             
             var d = new Date(), e = new Date(d);
             var now = Math.floor((e - d.setHours(0,0,0,0)) / 60000);
-            var inOnda = (prg.inizio <= now && prg.fine >= now);
+            var inOnda = (prg.inizio <= now && prg.fine > now);
             
             chBody.append('<div class="prg' + (inOnda ? ' inonda' : '') + '">' + prgPrev + prgMore + '</div>');
         }
