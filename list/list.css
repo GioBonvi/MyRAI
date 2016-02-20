@@ -9,6 +9,11 @@
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
+    
+    -webkit-flex-direction: column;
+    -moz-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
 }
 
 #list #channels {
@@ -16,26 +21,19 @@
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
-    -webkit-flex-direction: column;
-    -moz-flex-direction: column;
-    -ms-flex-direction: column;
-    flex-direction: column;
         
-    -webkit-flex: 0 0 10em;
-    -mox-flex: 0 0 10em;
-    -ms-flex: 0 0 10em;
-    flex: 0 0 10em;
+    -webkit-flex: 0 0 6em;
+    -mox-flex: 0 0 6em;
+    -ms-flex: 0 0 6em;
+    flex: 0 0 6em;
     
     overflow-y: auto;
 }
 
 #list #channels .ch-logo {
-    -webkit-flex: 0 0 8em;
-    -mox-flex: 0 0 8em;
-    -ms-flex: 0 0 8em;
-    flex: 0 0 8em;
+    flex: 0 0 4em;
     margin: 0.7em;
-    width: 8em;
+    height: 4em;
 }
 
 #list #inner-container {
@@ -88,7 +86,7 @@
     vertical-align: top;
 }
 
-#list .prg .prg-more .descrizione {
+#list .prg .prg-more {
     display: inline-block;
     vertical-align: top;
     width: calc(100% - 8em);

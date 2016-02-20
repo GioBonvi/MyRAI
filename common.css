@@ -73,7 +73,7 @@ body, main {
     flex-wrap: wrap;
 }
 
-.filtro-container > p{
+.filtro-container > p {
     margin: 0.2em 0.5em;
 }
 
@@ -85,4 +85,9 @@ body, main {
     width: 100%;
     margin-top: 10em;
     text-align: center;
+}
+
+footer {
+    text-align: center;
+    padding: 1em;
 }

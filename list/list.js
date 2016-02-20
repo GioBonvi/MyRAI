@@ -30,7 +30,7 @@ myChannels.forEach(function(ch) {
             
             var prgPrev = '<div class="prg-preview">' + durata + ' ' + titolo + ' - ' + genere + '</div>';
             
-            var img = '<img src="' + prg.immagine + '">';
+            var img = '<img align="left" src="' + prg.immagine + '">';
             var link = (prg.link != "" ? '<a href="' + prg.link + '">Pagina dedicata</a>' : "");
             var linkRAITV = (prg.linkRAITV != "" ? '<a href="' + prg.linkRAITV + '">Episodi registrati</a>' : "");
             var descr = '<div class="descrizione">' + prg.descrizione + '<br>' +  link + '&nbsp;&nbsp;&nbsp;' + linkRAITV + ' </div>';
@@ -51,9 +51,6 @@ myChannels.forEach(function(ch) {
     });
     
     $("#list #channels img.ch-logo").unbind().click(function() {
-        $("#inner-container").scrollTo('.ch-header[data-ch="' + $(this).attr("data-ch") + '"]');
+        $("#inner-container").scrollTo('.ch[data-ch="' + $(this).attr("data-ch") + '"] .prg.inonda');
     });
-    
-    $("#preloader").remove();
-    $("main").show();
 });
