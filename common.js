@@ -40,12 +40,6 @@ $(document).ready(function()
         window.location = dataURL;
     });
     
-    $("#btnMostra").click(function()
-    {
-        $('#ricerca-container').toggle('medium');
-        $(this).text(($(this).text() == "Ricerca" ? "Nascondi" : "Ricerca"));
-    });
-    
     $("#preloader").remove();
     $("main, footer, #showSidebar").show();
 });

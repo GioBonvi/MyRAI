@@ -10,6 +10,8 @@
         </label>
     </div>
     <h5>Ricerca</h5>
+    <p>Non puoi cercare caratteri che non siano alfanumerici, punti, virgole o -</p>
+    <p>Lascia vuoto un campo per ignorare il filtro corrispondente</p>
     <p><b>Canali:</b></p>
     <div class="filtro-container">
         <p><input type="checkbox" name="filtroCanali" data="RaiUno" id="filtro-ch-RaiUno">

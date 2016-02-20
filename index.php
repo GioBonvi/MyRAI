@@ -49,10 +49,6 @@ include_once("searchSidebar.php");
 
 <h3>My RAI</h3>
 <h5 id="dataAttuale">Programmazione per la giornata del </h5>
-<button class="btn waves-effect waves-light" id="btnMostra">Ricerca</button>
-<p>NB:<br>
- - Non inserire caratteri che non siano alfanumerici, punti, virgole o -<br>
- - Lascia vuoto un campo per ignorare il filtro corrispondente</p>
 
 <div>
 Se vuoi puoi tornare ad aprire questo filtro di ricerca specifico salvando nei preferiti questo link:<br><br>
