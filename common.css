@@ -3,6 +3,10 @@ body, main {
     font-size: 100%;
 }
 
+#ricerca-container {
+    padding: 0.7em;
+}
+
 #date {
     display: -webkit-box;
     display: -ms-flexbox;

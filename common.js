@@ -1,5 +1,6 @@
 $(document).ready(function() {
-    $("#cercaFiltri").click(function() {
+    $("#frmRicerca").submit(function(e) {
+        e.preventDefault();
         var myFiltroTitolo = $("#filtroTitolo").val();
         var myFiltroDescrOK = $("#filtroDescrOK").val();
         var myFiltroDescrNO = $("#filtroDescrNO").val();
