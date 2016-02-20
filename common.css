@@ -7,6 +7,10 @@ body, main {
     padding: 0.7em;
 }
 
+#permaLink {
+    word-wrap: break-word;
+}
+
 #date {
     display: -webkit-box;
     display: -ms-flexbox;

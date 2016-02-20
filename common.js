@@ -1,7 +1,5 @@
 $(document).ready(function()
-{
-    $("body").width(window.width);    
-    
+{    
     $("#frmRicerca").submit(function(e)
     {
         e.preventDefault();
@@ -49,5 +47,5 @@ $(document).ready(function()
     });
     
     $("#preloader").remove();
-    $("main, footer").show();
+    $("main, footer, #showSidebar").show();
 });
