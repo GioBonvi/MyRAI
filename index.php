@@ -190,23 +190,31 @@ else
 var data = "<?php
 if (! isset($_GET['data']))
 {
-    $_GET['data'] = time();
+    $myData = time();
 }
 else if (! is_numeric($_GET['data']))
 {
-    $_GET['data'] = time();
+    if ($_GET['data'] == "Domani")
+    {
+        $myData = time() + 24 * 60 * 60;
+    }
+    else 
+    {
+        $myData = time();
+    }
 }
 else if ($_GET['data'] < time())
 {
-    $_GET['data'] = time();
+    $myData = time();
 }
-echo date("Y_m_d", $_GET['data']);
+echo date("Y_m_d", $myData);
 ?>";
+console.log("1");
 
-$("#dataAttuale").text("Programmazione per la gioranta del " + data.replace(new RegExp("_", "g"), "-"));
+$("#dataAttuale").text("Programmazione per la giornata del " + data.replace(new RegExp("_", "g"), "-"));
 
 // Data sottoforma di timestamp UNIX;
-var timestamp = <?= $_GET['data'];?>;
+var timestamp = <?= $myData;?>;
 timestamp = timestamp - (timestamp % (24*60*60));
 
 /*
@@ -334,7 +342,17 @@ myChannels.forEach(function(ch) {
 });
 
 // Data in cui cercare.
-$("select#filtroData").find('option[value="' + timestamp + '"]').prop("selected", true);
+<?php
+if($_GET['data'] == 'Oggi' || $_GET['data'] == 'Domani')
+{
+    echo '$("select#filtroData").find(\'option[value="' . $_GET['data'] . '"]\').prop("selected", true);';
+}
+else
+{
+    echo '$("select#filtroData").find(\'option[value="\' + timestamp + \'"]\').prop("selected", true);';
+}
+?>
+
 $("select#filtroData").material_select();
 
 $("#filtroTitolo").val(filtroTitolo);

@@ -1,5 +1,5 @@
 // Adattamento della grafica allo schermo.
-$("#list-container").height(window.innerHeight - $("#wall-date").height());
+$("#list").css("height", window.innerHeight - $("#date").height() - 50);
 
 // Qui  vengono salvate le info di tutti i programmi.
 var allChannelsData = {RaiUno: "", RaiDue: "", RaiTre: "", Rai4: "", Extra: ""};
