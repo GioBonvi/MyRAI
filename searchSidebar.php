@@ -31,7 +31,7 @@
             <option value="Oggi" selected>Oggi</option>
             <option value="Domani">Domani</option>
             <?php
-            for ($i = 0; $i < 7; $i = $i + 1)
+            for ($i = 1; $i < 7; $i = $i + 1)
             {
                 $timestamp = time() + $i * 24 * 3600;
                 $timestamp = $timestamp - ($timestamp % (24*60 * 60));
