@@ -83,7 +83,7 @@ function getChannelData(ch, data, filtri)
                     prg.descrizione = prg.descrizione.replace(new RegExp("<span.*span>\n", "g"), "");
                     if (prg.descrizione == "\n")
                     {
-                        prg.descrizione = "Nessuna descrizione";
+                        prg.descrizione = "Questo programma non presenta nessuna descrizione :(";
                     }
                     
                     prg.genere = $("div.eventDescription", val).attr("data-genere").toLowerCase();

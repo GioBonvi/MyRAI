@@ -89,6 +89,5 @@
 #list .prg .prg-more {
     display: inline-block;
     vertical-align: top;
-    width: calc(100% - 8em);
     margin-top: 0.7em;
 }
