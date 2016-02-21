@@ -36,10 +36,13 @@ myChannels.forEach(function(ch) {
             var descr = '<div class="descrizione">' + prg.descrizione + '<br>' +  link + '&nbsp;&nbsp;&nbsp;' + linkRAITV + ' </div>';
             var prgMore = '<div class="prg-more" style="display: none">' + img + descr + '</div>';
             
+            // Minuti passati dalla mezzanotte.
             var d = new Date(), e = new Date(d);
             var now = Math.floor((e - d.setHours(0,0,0,0)) / 60000);
-            var inOnda = (prg.inizio <= now && prg.fine > now);
-            
+            var nowData = d.getFullYear() + "_" + ((d.getMonth() + 1 < 10) ? "0" + (d.getMonth() + 1) : (d.getMonth() + 1) ) + "_" + ((d.getDate() < 10) ? "0" + d.getDate() : d.getDate() );
+            // Per essere in onda deve essere giusta sia l'ora che la data.
+            var inOnda = (nowData == data) && (prg.inizio <= now && prg.fine > now);
+            console.log(nowData + " - " + data);
             chBody.append('<div class="prg' + (inOnda ? ' inonda' : '') + '">' + prgPrev + prgMore + '</div>');
         }
         channel.append(chHeader).append(chBody);
@@ -51,6 +54,13 @@ myChannels.forEach(function(ch) {
     });
     
     $("#list #channels img.ch-logo").unbind().click(function() {
-        $("#inner-container").scrollTo('.ch[data-ch="' + $(this).attr("data-ch") + '"] .prg.inonda');
+        if ($("#inner-container").find('.ch[data-ch="' + $(this).attr("data-ch") + '"] .prg.inonda').length > 0)
+        {
+            $("#inner-container").scrollTo('.ch[data-ch="' + $(this).attr("data-ch") + '"] .prg.inonda');
+        }
+        else
+        {
+            $("#inner-container").scrollTo('.ch-header[data-ch="' + $(this).attr("data-ch") + '"]');
+        }
     });
 });

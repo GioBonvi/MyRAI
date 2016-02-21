@@ -203,6 +203,11 @@ else if ($_GET['data'] < time())
 {
     $myData = time();
 }
+else
+{
+    $myData = $_GET['data'];
+}
+
 echo date("Y_m_d", $myData);
 ?>";
 console.log("1");
