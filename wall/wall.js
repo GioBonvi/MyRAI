@@ -25,7 +25,7 @@ myChannels.forEach(function(ch) {
         $("#wall .hour-divider").each(function() {
             $(this).append('<span>' + $(this).attr("data-ora") + '</span>');
         });
-        $("#wall #channels").append('<img class="ch-logo card" src="img/' + ch + '_100.jpg">');
+        $("#wall #channels").append('<img class="ch-logo card" src="img/' + ch + '_100.jpg"> alt="' + ch + ' logo"');
         $("#wall .hour").append('<div class="ch" data-ch="' + ch + '"></div>');
         
         allChannelsData[ch] = chData;
@@ -34,7 +34,7 @@ myChannels.forEach(function(ch) {
             var prg = chData[i];
             
             // Se il programma dura troppo poco l'immagine viene nascosta per fare spazio al testo.
-            var divImg = divImg = $('<div class="prg-img"></div>').append('<img src="' + prg.immagine + '" ' + ((prg.durata * em_min) < 10 ? "hidden" : "") + '>');
+            var divImg = divImg = $('<div class="prg-img"></div>').append('<img alt="' + prg.titolo + '" src="' + prg.immagine + '" ' + ((prg.durata * em_min) < 10 ? "hidden" : "") + '>');
             
             var titolo = '<span class="titolo">' + prg.titolo + '</span>';
             

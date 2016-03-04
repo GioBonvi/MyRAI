@@ -14,7 +14,7 @@ myChannels.forEach(function(ch) {
         $("#noPrograms").remove();
         
         allChannelsData[ch] = chData;
-        $("#list #channels").append('<img class="ch-logo card" data-ch="' + ch + '" src="img/' + ch + '_100.jpg">');
+        $("#list #channels").append('<img class="ch-logo card" data-ch="' + ch + '" src="img/' + ch + '_100.jpg" alt="' + ch + ' logo">');
         
         var channel = $('<div class="ch" data-ch="' + ch + '"></div>');
         
@@ -30,7 +30,7 @@ myChannels.forEach(function(ch) {
             
             var prgPrev = '<div class="prg-preview">' + durata + ' ' + titolo + ' - ' + genere + '</div>';
             
-            var img = '<img align="left" src="' + prg.immagine + '">';
+            var img = '<img align="left" src="' + prg.immagine + '" alt="' + prg.titolo + '">';
             var link = (prg.link != "" ? '<a href="' + prg.link + '">Pagina dedicata</a>' : "");
             var linkRAITV = (prg.linkRAITV != "" ? '<a href="' + prg.linkRAITV + '">Episodi registrati</a>' : "");
             var descr = '<div class="descrizione">' + prg.descrizione + '<br>' +  link + '&nbsp;&nbsp;&nbsp;' + linkRAITV + ' </div>';
@@ -42,7 +42,6 @@ myChannels.forEach(function(ch) {
             var nowData = d.getFullYear() + "_" + ((d.getMonth() + 1 < 10) ? "0" + (d.getMonth() + 1) : (d.getMonth() + 1) ) + "_" + ((d.getDate() < 10) ? "0" + d.getDate() : d.getDate() );
             // Per essere in onda deve essere giusta sia l'ora che la data.
             var inOnda = (nowData == data) && (prg.inizio <= now && prg.fine > now);
-            console.log(nowData + " - " + data);
             chBody.append('<div class="prg' + (inOnda ? ' inonda' : '') + '">' + prgPrev + prgMore + '</div>');
         }
         channel.append(chHeader).append(chBody);
