@@ -22,7 +22,7 @@
  *  ch
  *      Indica il nome del canale di cui si vuole la programmazione.
  *      Deve essere uno dei seguenti valori:
- *          RaiUno RaiDue RaiTre Rai4 Extra
+ *          RaiUno RaiDue RaiTre Rai4 Extra RaiMovie Premium RaiGulp Yoyo RaiEDU2 RaiEducational RaiNews RaiSport1 RaiSport2
  *  data
  *      Indica il giorno di cui si vuole la programmazione-
  *      Il formato deve essere rigorosamente YYYY_MM_DD

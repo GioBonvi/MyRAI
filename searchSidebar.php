@@ -24,6 +24,24 @@
         <label for="filtro-ch-Rai4">Rai 4</label></p>
         <p><input type="checkbox" name="filtroCanali" data="Extra" id="filtro-ch-Extra">
         <label for="filtro-ch-Extra">Rai 5</label></p>
+        <p><input type="checkbox" name="filtroCanali" data="RaiMovie" id="filtro-ch-RaiMovie">
+        <label for="filtro-ch-RaiMovie">Rai Movie</label></p>
+        <p><input type="checkbox" name="filtroCanali" data="Premium" id="filtro-ch-Premium">
+        <label for="filtro-ch-Premium">Rai Premium</label></p>
+        <p><input type="checkbox" name="filtroCanali" data="RaiGulp" id="filtro-ch-RaiGulp">
+        <label for="filtro-ch-RaiGulp">Rai Gulp</label></p>
+        <p><input type="checkbox" name="filtroCanali" data="Yoyo" id="filtro-ch-Yoyo">
+        <label for="filtro-ch-Yoyo">Rai YoYo</label></p>
+        <p><input type="checkbox" name="filtroCanali" data="RaiEDU2" id="filtro-ch-RaiEDU2">
+        <label for="filtro-ch-RaiEDU2">Rai Storia</label></p>
+        <p><input type="checkbox" name="filtroCanali" data="RaiEducational" id="filtro-ch-RaiEducational">
+        <label for="filtro-ch-RaiEducational">Rai Scuola</label></p>
+        <p><input type="checkbox" name="filtroCanali" data="RaiNews" id="filtro-ch-RaiNews">
+        <label for="filtro-ch-RaiNews">Rai News 24</label></p>
+        <p><input type="checkbox" name="filtroCanali" data="RaiSport1" id="filtro-ch-RaiSport1">
+        <label for="filtro-ch-RaiSport1">Rai Sport 1</label></p>
+        <p><input type="checkbox" name="filtroCanali" data="RaiSport2" id="filtro-ch-RaiSport2">
+        <label for="filtro-ch-RaiSport2">Rai Sport 2</label></p>
     </div>
     <p><b>Data di trasmissione:</b></p>
     <div class="input-field">

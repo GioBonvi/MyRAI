@@ -8,7 +8,14 @@ channelNames = {
     Rai4: "Rai Quattro",
     Extra: "Rai Cinque",
     Premium: "Rai Premium",
-    RaiGulp: "Rai Gulp"
+    RaiGulp: "Rai Gulp",
+    RaiMovie: "Rai Movie",
+    Yoyo: "Rai YoYo",
+    RaiEDU2: "Rai Storia",
+    RaiEducational: "Rai Scuola",
+    RaiNews: "Rai News 24",
+    RaiSport1: "Rai Sport 1",
+    RaiSport2: "Rai Sport 2"
 };
 
 $(document).ready(function()

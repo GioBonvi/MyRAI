@@ -210,7 +210,6 @@ else
 
 echo date("Y_m_d", $myData);
 ?>";
-console.log("1");
 
 $("#dataAttuale").text("Programmazione per la giornata del " + data.replace(new RegExp("_", "g"), "-"));
 
@@ -232,14 +231,15 @@ timestamp = timestamp - (timestamp % (24*60*60));
 var myChannels = [<?php
 if (! isset ($_GET['channels']))
 {
-    $_GET['channels'] = "RaiUno,RaiDue,RaiTre,Rai4,Extra";
+    $_GET['channels'] = "RaiUno,RaiDue,RaiTre,Rai4,Extra,RaiMovie,Premium,RaiGulp,Yoyo,RaiEDU2,RaiEducational,RaiNews,RaiSport1,RaiSport2";
 }
 else if ($_GET['channels'] == "")
 {
-    $_GET['channels'] = "RaiUno,RaiDue,RaiTre,Rai4,Extra";
+    $_GET['channels'] = "RaiUno,RaiDue,RaiTre,Rai4,Extra,RaiMovie,Premium,RaiGulp,Yoyo,RaiEDU2,RaiEducational,RaiNews,RaiSport1,RaiSport2";
 }
 $channels = split(",", $_GET['channels']);
-$chOK = array("RaiUno", "RaiDue", "RaiTre", "Rai4", "Extra");
+$chOK = array("RaiUno", "RaiDue", "RaiTre", "Rai4", "Extra", "RaiMovie", "Premium", "RaiGulp", "Yoyo", "RaiEDU2", "RaiEducational",
+                "RaiNews", "RaiSport1", "RaiSport2");
 foreach ($channels as $ch)
 {
     if (in_array($ch, $chOK))

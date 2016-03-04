@@ -27,7 +27,8 @@
     -ms-flex: 0 0 6em;
     flex: 0 0 6em;
     
-    overflow-y: auto;
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 
 #list #channels .ch-logo {
