@@ -1,6 +1,3 @@
-// Qui  vengono salvate le info di tutti i programmi.
-var allChannelsData = {RaiUno: "", RaiDue: "", RaiTre: "", Rai4: "", Extra: ""};
-
 $(document).ready(function() {
 
 // Adattamento della grafica allo schermo.
@@ -64,15 +61,7 @@ $(".hour").each(function() {
     }
 });
 
-$(".prg").click(function() {
-    channelNames = {
-        RaiUno: "Rai Uno",
-        RaiDue: "Rai Due",
-        RaiTre: "Rai Tre",
-        Rai4: "Rai Quattro",
-        Extra: "Rai Cinque"
-    };
-    
+$(".prg").click(function() {    
     var channel = $(this).parent().attr("data-ch");
     var n = $(this).attr("data-n");
     var prog = allChannelsData[channel][n];

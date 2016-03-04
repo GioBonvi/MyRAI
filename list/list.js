@@ -1,9 +1,6 @@
 // Adattamento della grafica allo schermo.
 $("#list").css("height", window.innerHeight - $("#date").height() - 50);
 
-// Qui  vengono salvate le info di tutti i programmi.
-var allChannelsData = {RaiUno: "", RaiDue: "", RaiTre: "", Rai4: "", Extra: ""};
-
 myChannels.forEach(function(ch) {
     
     var chData = getChannelData(ch, data, filtri);
@@ -18,7 +15,7 @@ myChannels.forEach(function(ch) {
         
         var channel = $('<div class="ch" data-ch="' + ch + '"></div>');
         
-        var chHeader = '<div class="ch-header" data-ch="' + ch + '"><img class="ch-logo" src="img/' + ch + '_100.jpg"><h5 class="ch-header-text">Rai Uno</h5></div>';
+        var chHeader = '<div class="ch-header" data-ch="' + ch + '"><img class="ch-logo" src="img/' + ch + '_100.jpg"><h5 class="ch-header-text">' + channelNames[ch] + '</h5></div>';
         var chBody = $('<div class="ch-body" data-ch="' + ch + '"></div>');
         
         for (var i = 0; i < chData.length; i = i + 1)

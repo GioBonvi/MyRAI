@@ -1,5 +1,20 @@
+// Qui  vengono salvate le info di tutti i programmi.
+var allChannelsData = {RaiUno: "", RaiDue: "", RaiTre: "", Rai4: "", Extra: "", Premium: "", RaiGulp: ""};
+
+channelNames = {
+    RaiUno: "Rai Uno",
+    RaiDue: "Rai Due",
+    RaiTre: "Rai Tre",
+    Rai4: "Rai Quattro",
+    Extra: "Rai Cinque",
+    Premium: "Rai Premium",
+    RaiGulp: "Rai Gulp"
+};
+
 $(document).ready(function()
-{    
+{
+    
+    
     $("#frmRicerca").submit(function(e)
     {
         e.preventDefault();
