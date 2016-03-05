@@ -59,6 +59,17 @@
         </select>
         <label>Scegli una data</label>
     </div>
+    <p><b>Fascia oraria:</b></p>
+    <div class="input-field">
+        <select id="filtroOra">
+            <option value="" selected>Qualisasi</option>
+            <option value="notte">Notte (00-06)</option>
+            <option value="mattina">Mattina (06-12)</option>
+            <option value="pomeriggio">Pomeriggio (12-18)</option>
+            <option value="sera">Sera (18-24)</option>
+        </select>
+        <label>Scegli una fascia oraria</label>
+    </div>
     <p><b>Titolo che contenga:</b></p>
     <div class="input-field">
         <input id="filtroTitolo" type="text" class="validate" pattern="^[0-9a-zA-Zàèéìòù.,-]*$" title="Solo caratteri alfanumerici, punti, virgole o -">

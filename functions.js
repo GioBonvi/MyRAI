@@ -37,6 +37,7 @@
  *              titolo: filtroTitolo,                   // Una stringa. Vengono selezionati i programmi che la contengono nel titolo.
  *              descrizioneOK: filtroDescrizioneOK,     // Una stringa. Vengono selezionati i programmi che la contengono nella descrizione.
  *              descrizioneNO: filtroDescrizioneNO      // Una stringa. Vengono selezionati i programmi che NON la contengono nella descrizione.
+ *              fasciaOraria: ["notte" | "mattina" | "pomeriggio" | "sera"]
  *          }
  *     
  */
@@ -125,7 +126,9 @@ function getChannelData(ch, data, filtri)
                         channelData.pop();
                     }
                     
+                    
                     // Ora applichiamo i filtri.
+                    
                     
                     // Test genere.
                     if (filtri.genere == "")
@@ -168,9 +171,26 @@ function getChannelData(ch, data, filtri)
                     prg.testTit = (new RegExp(filtri.titolo,"i")).test(prg.titolo);
                     prg.testDescOK = (new RegExp(filtri.descrizioneOK,"i")).test(prg.descrizione);
                     prg.testDescNO = filtri.descrizioneNO == "" ? true : ! (new RegExp(filtri.descrizioneNO,"i")).test(prg.descrizione);
+                    console.log(filtri.fasciaOraria);
+                    switch (filtri.fasciaOraria) {
+                        case "notte":
+                            prg.testOra = (prg.inizio >= 0 && prg.inizio < 360);
+                            break;
+                        case "mattina":
+                            prg.testOra = (prg.inizio >= 360 && prg.inizio < 720);
+                            break;
+                        case "pomeriggio":
+                            prg.testOra = (prg.inizio >= 720 && prg.inizio < 1080);
+                            break;
+                        case "sera":
+                            prg.testOra = (prg.inizio >= 1080 && prg.inizio < 1440);
+                            break;
+                        default:
+                            prg.testOra = true;
+                    }
                     
                     // Indica se il programma corrisponde a tutti i filtri.
-                    prg.isOK = prg.testGen && prg.testMacGen && prg.testTit && prg.testDescOK && prg.testDescNO;
+                    prg.isOK = prg.testGen && prg.testMacGen && prg.testTit && prg.testDescOK && prg.testDescNO && prg.testOra;
                     
                     // Alcune volte il programma è segnato alle 6:00, ma è alla fine della giornata e non all'inizio.
                     // in questo caso viene ignorato (fa parte del giorno successivo)

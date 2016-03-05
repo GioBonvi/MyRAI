@@ -47,7 +47,8 @@ $(document).ready(function()
             myFiltroMacGen = myFiltroMacGen + $(this).attr("data") + ",";
         });
         
-        var myFiltroData = $('select#filtroData').val();        
+        var myFiltroData = $('select#filtroData').val();
+        var myFiltroOra = $('select#filtroOra').val();
         
         var dataURL = "?" +
                         "channels=" + channels +
@@ -57,7 +58,8 @@ $(document).ready(function()
                         "&macrogenere=" + myFiltroMacGen +
                         "&genere=" + myFiltroGen +
                         "&descrOK=" + myFiltroDescrOK +
-                        "&descrNO=" + myFiltroDescrNO;
+                        "&descrNO=" + myFiltroDescrNO +
+                        "&ora=" + myFiltroOra;
                         
         window.location = dataURL;
     });

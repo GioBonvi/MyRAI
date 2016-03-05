@@ -314,12 +314,29 @@ else if (! preg_match("/^[0-9a-zA-Zàèéìòù.,-]*$/", $_GET['descrNO']))
 echo $_GET['descrNO'];
 ?>";
 
+// Filtro della fascia oraria.
+var filtroFasciaOraria = "<?php
+if (! isset ($_GET['ora']))
+{
+    $_GET['ora'] = "";
+}
+else if ($_GET['ora'] != "notte" &&
+            $_GET['ora'] != "mattina" &&
+            $_GET['ora'] != "pomeriggio" &&
+            $_GET['ora'] != "sera")
+{
+    $_GET['ora'] = "";
+}
+echo $_GET['ora'];
+?>";
+
 var filtri = {
 genere: filtroGenere,
 macrogenere: filtroMacrogenere,
 titolo: filtroTitolo,
 descrizioneOK: filtroDescrizioneOK,
-descrizioneNO: filtroDescrizioneNO
+descrizioneNO: filtroDescrizioneNO,
+fasciaOraria: filtroFasciaOraria
 };
 
 
@@ -355,6 +372,16 @@ else
 ?>
 
 $("select#filtroData").material_select();
+
+// Ora in cui cercare.
+<?php
+if($_GET['ora'] == 'notte' || $_GET['ora'] == 'mattina' || $_GET['ora'] == 'pomeriggio' || $_GET['ora'] == 'sera')
+{
+    echo '$("select#filtroOra").find(\'option[value="' . $_GET['ora'] . '"]\').prop("selected", true);';
+}
+?>
+
+$("select#filtroOra").material_select();
 
 $("#filtroTitolo").val(filtroTitolo);
 $("#filtroDescrNO").val(filtroDescrizioneNO);
