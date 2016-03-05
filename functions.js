@@ -171,7 +171,6 @@ function getChannelData(ch, data, filtri)
                     prg.testTit = (new RegExp(filtri.titolo,"i")).test(prg.titolo);
                     prg.testDescOK = (new RegExp(filtri.descrizioneOK,"i")).test(prg.descrizione);
                     prg.testDescNO = filtri.descrizioneNO == "" ? true : ! (new RegExp(filtri.descrizioneNO,"i")).test(prg.descrizione);
-                    console.log(filtri.fasciaOraria);
                     switch (filtri.fasciaOraria) {
                         case "notte":
                             prg.testOra = (prg.inizio >= 0 && prg.inizio < 360);
