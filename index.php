@@ -182,6 +182,10 @@ else
 </div>
 
 <script>
+
+$("#preloader").remove();
+$("main, footer, #showSidebar").show();
+
 // Imposta la data attuale in base al parametro "data" nell'URL.
 var data = "<?php
 if (! isset($_GET['data']))

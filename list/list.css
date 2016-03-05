@@ -79,16 +79,16 @@
     background-color: #bd3c3c;
 }
 
+#list .prg .prg-more {
+    display: inline-block;
+    vertical-align: top;
+    padding: 0.5em;
+}
+
 #list .prg .prg-more img {
     display: inline-block;
     width: 6em;
     height: 6em;
     margin: 0.7em;
     vertical-align: top;
-}
-
-#list .prg .prg-more {
-    display: inline-block;
-    vertical-align: top;
-    margin-top: 0.7em;
 }

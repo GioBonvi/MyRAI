@@ -20,8 +20,6 @@ channelNames = {
 
 $(document).ready(function()
 {
-    
-    
     $("#frmRicerca").submit(function(e)
     {
         e.preventDefault();
@@ -63,7 +61,4 @@ $(document).ready(function()
                         
         window.location = dataURL;
     });
-    
-    $("#preloader").remove();
-    $("main, footer, #showSidebar").show();
 });

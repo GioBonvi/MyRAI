@@ -22,7 +22,7 @@ myChannels.forEach(function(ch) {
         $("#wall .hour-divider").each(function() {
             $(this).append('<span>' + $(this).attr("data-ora") + '</span>');
         });
-        $("#wall #channels").append('<img class="ch-logo card" src="img/' + ch + '_100.jpg"> alt="' + ch + ' logo"');
+        $("#wall #channels").append('<img class="ch-logo card" src="img/' + ch + '_100.jpg" alt="' + ch + ' logo">');
         $("#wall .hour").append('<div class="ch" data-ch="' + ch + '"></div>');
         
         allChannelsData[ch] = chData;
