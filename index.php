@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="http://fonts.googleapis.com/icon?family=Material+Icons">
     <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
     <link type="text/css" rel="stylesheet" href="common.css">
-    <link type="text/css" rel="stylesheet" href="wall/wall.css">
     <link type="text/css" rel="stylesheet" href="list/list.css">
 
     <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
@@ -20,30 +19,10 @@
 <body>
 
 <?php
-$mode = ($_GET['mode'] == "wall" ? "wall" : "list");
+include("searchSidebar.php");
 ?>
 
-<div id="preloader-container">
-    <div id="preloader" class="preloader-wrapper big active">
-        <div class="spinner-layer spinner-green-only">
-            <div class="circle-clipper left">
-                <div class="circle"></div>
-            </div>
-            <div class="gap-patch">
-                <div class="circle"></div>
-            </div>
-            <div class="circle-clipper right">
-                <div class="circle"></div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<?php
-include_once("searchSidebar.php");
-?>
-
-<main style="display: none">
+<main>
 
 <div class="container">
 
@@ -67,102 +46,39 @@ $("#permaLink").attr("href", location.href).text(location.href);
     for ($i = 0; $i < 7; $i = $i + 1)
     {
         $timestamp = time() + $i * 24 * 3600;
-        echo '<div class="data card green"><a data-timestamp="' . $timestamp . '" href="?mode=' . $mode . '&data=' . $timestamp . '">' . date("d-m-Y", $timestamp) . '</a></div>' . "\n";
+        echo '<div class="data card green"><a data-timestamp="' . $timestamp . '" href="?data=' . $timestamp . '">' . date("d-m-Y", $timestamp) . '</a></div>' . "\n";
     }
 ?>
 </div>
 
-<?php
-
-if ($mode == "wall")
-{
-// Modalità WALL
-?>
-
-<div id="wall">
-    <div id="channels">
-        
-    </div>
-    <div class="hour-divider" data-ora="06:00"></div>
-    <div class="hour" data-start="360"></div>
-    <div class="hour-divider" data-ora="07:00"></div>
-    <div class="hour" data-start="420"></div>
-    <div class="hour-divider" data-ora="08:00"></div>
-    <div class="hour" data-start="480"></div>
-    <div class="hour-divider" data-ora="09:00"></div>
-    <div class="hour" data-start="540"></div>
-    <div class="hour-divider" data-ora="10:00"></div>
-    <div class="hour" data-start="600"></div>
-    <div class="hour-divider" data-ora="11:00"></div>
-    <div class="hour" data-start="660"></div>
-    <div class="hour-divider" data-ora="12:00"></div>
-    <div class="hour" data-start="720"></div>
-    <div class="hour-divider" data-ora="13:00"></div>
-    <div class="hour" data-start="780"></div>
-    <div class="hour-divider" data-ora="14:00"></div>
-    <div class="hour" data-start="840"></div>
-    <div class="hour-divider" data-ora="15:00"></div>
-    <div class="hour" data-start="900"></div>
-    <div class="hour-divider" data-ora="16:00"></div>
-    <div class="hour" data-start="960"></div>
-    <div class="hour-divider" data-ora="17:00"></div>
-    <div class="hour" data-start="1020"></div>
-    <div class="hour-divider" data-ora="18:00"></div>
-    <div class="hour" data-start="1080"></div>
-    <div class="hour-divider" data-ora="19:00"></div>
-    <div class="hour" data-start="1140"></div>
-    <div class="hour-divider" data-ora="20:00"></div>
-    <div class="hour" data-start="1200"></div>
-    <div class="hour-divider" data-ora="21:00"></div>
-    <div class="hour" data-start="1260"></div>
-    <div class="hour-divider" data-ora="22:00"></div>
-    <div class="hour" data-start="1320"></div>
-    <div class="hour-divider" data-ora="23:00"></div>
-    <div class="hour" data-start="1380"></div>
-    <div class="hour-divider" data-ora="00:00"></div>
-    <div class="hour" data-start="0"></div>
-    <div class="hour-divider" data-ora="01:00"></div>
-    <div class="hour" data-start="60"></div>
-    <div class="hour-divider" data-ora="02:00"></div>
-    <div class="hour" data-start="120"></div>
-    <div class="hour-divider" data-ora="03:00"></div>
-    <div class="hour" data-start="180"></div>
-    <div class="hour-divider" data-ora="04:00"></div>
-    <div class="hour" data-start="240"></div>
-    <div class="hour-divider" data-ora="05:00"></div>
-    <div class="hour" data-start="300"></div>
-    <div id="noPrograms">
-        <h5>Sembra che non ci siano programmi corrispondenti a questa ricerca...</h5>
-    </div>
-</div>
-<?php
-}
-// Fine modalità WALL
-else
-{
-// Modalità LIST
-?>
-
-
 <div id="list">
+    <div id="preloader-container">
+        <div id="preloader" class="preloader-wrapper big active">
+            <div class="spinner-layer spinner-green-only">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+                <div class="gap-patch">
+                    <div class="circle"></div>
+                </div>
+                <div class="circle-clipper right">
+                    <div class="circle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div id="channels">
     </div>
     <div id="inner-container">
-    <div id="noPrograms">
-        <h5>Sembra che non ci siano programmi corrispondenti a questa ricerca...</h5>
-    </div>
+        <div id="noPrograms" hidden>
+            <h5>Sembra che non ci siano programmi corrispondenti a questa ricerca...</h5>
+        </div>
     </div>
 </div>
 
-
-
-<?php
-}
-// Fine modalità LIST
-?>
 </main>
 
-<footer hidden>
+<footer>
 <p>Il codice sorgente di questo progetto &egrave; disponibile sotto licenza GPL v3 in <a href="https://github.com/GioBonvi/MyRAI">questa repository di GitHub</a>.</p>
 </footer>
 
@@ -182,10 +98,6 @@ else
 </div>
 
 <script>
-
-$("#preloader").remove();
-$("main, footer, #showSidebar").show();
-
 // Imposta la data attuale in base al parametro "data" nell'URL.
 var data = "<?php
 if (! isset($_GET['data']))
@@ -346,18 +258,6 @@ fasciaOraria: filtroFasciaOraria
 
 // Popola il form di ricerca con i valori dei filtri
 
-// Modalità WALL/LIST.
-$("#chkModeList").prop("checked", <?php
-    if ($mode == "wall")
-    {
-        echo "false";
-    }
-    else
-    {
-        echo "true";
-    }
-?>);
-
 // Canali attivi.
 myChannels.forEach(function(ch) {
     $("#filtro-ch-" + ch).prop("checked", true);
@@ -403,15 +303,6 @@ filtroGenere.split(",").forEach(function(gen) {
 });
 </script>
 
-<?php
-if ($mode == "wall")
-{
-    echo '<script src="wall/wall.js"></script>';
-}
-else 
-{
-    echo '<script src="list/list.js"></script>';
-}
-?>
+<script src="list/list.js"></script>
 </body>
 </html>

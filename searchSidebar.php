@@ -1,14 +1,5 @@
 <ul id="ricerca-container" class="side-nav">
 <form id="frmRicerca">
-    <div class="switch">
-        <p>Modalit&agrave; di visualizzazione:</p>
-        <label>
-            Wall
-            <input type="checkbox" id="chkModeList">
-            <span class="lever"></span>
-            List
-        </label>
-    </div>
     <h5>Ricerca</h5>
     <p>Non puoi cercare caratteri che non siano alfanumerici, punti, virgole o -</p>
     <p>Lascia vuoto un campo per ignorare il filtro corrispondente</p>
@@ -163,7 +154,7 @@
 </ul>
 
 <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-    <a id="showSidebar" data-activates="ricerca-container" class="btn-floating btn-large red"  style="display: none" >
+    <a id="showSidebar" data-activates="ricerca-container" class="btn-floating btn-large red">
         <i class="large material-icons">search</i>
     </a>
 </div>

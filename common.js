@@ -50,7 +50,6 @@ $(document).ready(function()
         
         var dataURL = "?" +
                         "channels=" + channels +
-                        "&mode=" + ($("#chkModeList").prop("checked") ? "list" : "wall") +
                         "&data=" + myFiltroData +
                         "&titolo=" + myFiltroTitolo +
                         "&macrogenere=" + myFiltroMacGen +
