@@ -68,12 +68,12 @@
     </div>
     <p><b>Descrizione che contenga:</b></p>
     <div class="input-field">
-        <textarea id="filtroDescrOK" class="materialize-textarea validate" pattern="^[0-9a-zA-Zàèéìòù.,-]*$" title="Solo caratteri alfanumerici, punti, virgole o -"></textarea>
+        <textarea id="filtroDescrOK" class="materialize-textarea validate" title="Solo caratteri alfanumerici, punti, virgole o -"></textarea>
         <label for="filtroDescrOK">Descrizione</label>
     </div>
     <p><b>Descrizione che non contenga:</b></p>
     <div class="input-field">
-        <textarea id="filtroDescrNO" class="materialize-textarea validate" pattern="^[0-9a-zA-Zàèéìòù.,-]*$" title="Solo caratteri alfanumerici, punti, virgole o -"></textarea>
+        <textarea id="filtroDescrNO" class="materialize-textarea validate" title="Solo caratteri alfanumerici, punti, virgole o -"></textarea>
         <label for="filtroDescrNO">Descrizione</label>
     </div>
     <p><b>Macrogeneri:</b></p>

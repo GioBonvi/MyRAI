@@ -1,3 +1,80 @@
+body, main {
+    height: 100%;
+    font-size: 100%;
+}
+
+#ricerca-container {
+    padding: 0.7em;
+}
+
+#permaLink {
+    word-wrap: break-word;
+}
+
+#date {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: space-between;
+    -ms-justify-content: space-between;
+    -moz-justify-content: space-between;
+    justify-content: space-between;
+    width: 100%;
+    overflow: auto;
+    margin-top: 2em;
+}
+
+.data {
+    -webkit-flex: 0 0 auto;
+    -moz-flex: 0 0 auto;
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+    padding: 0.7em;
+    margin: 0 0.2em;
+    
+    color: white;
+}
+
+.data a {
+    color: white;
+}
+
+#preloader-container {
+    width: 100%;
+    position: relative;
+    top: 10em;
+    text-align: center;
+}
+
+#filtroCanali-container {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}
+
+.filtro-container {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    -moz-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.filtro-container > p {
+    margin: 0.2em 0.5em;
+}
+
+#noPrograms {
+    width: 100%;
+    margin-top: 10em;
+    text-align: center;
+}
+
 #list {
     margin-top: 1em;
     display: block;
@@ -79,6 +156,10 @@
     background-color: #bd3c3c;
 }
 
+#list .prg .titolo {
+    font-weight: bold;
+}
+
 #list .prg .prg-more {
     display: inline-block;
     vertical-align: top;
@@ -91,4 +172,10 @@
     height: 6em;
     margin: 0.7em;
     vertical-align: top;
+}
+
+
+footer {
+    text-align: center;
+    padding: 1em;
 }

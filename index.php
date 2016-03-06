@@ -8,12 +8,10 @@
     
     <link rel="stylesheet" href="http://fonts.googleapis.com/icon?family=Material+Icons">
     <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
-    <link type="text/css" rel="stylesheet" href="common.css">
     <link type="text/css" rel="stylesheet" href="list/list.css">
 
     <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
-    <script src="common.js"></script>
     <script src="functions.js"></script>
 </head>
 <body>
@@ -46,7 +44,7 @@ $("#permaLink").attr("href", location.href).text(location.href);
     for ($i = 0; $i < 7; $i = $i + 1)
     {
         $timestamp = time() + $i * 24 * 3600;
-        echo '<div class="data card green"><a data-timestamp="' . $timestamp . '" href="?data=' . $timestamp . '">' . date("d-m-Y", $timestamp) . '</a></div>' . "\n";
+        echo '<div class="data card green"><div data-timestamp="' . $timestamp . '">' . date("d-m-Y", $timestamp) . '</div></div>' . "\n";
     }
 ?>
 </div>
