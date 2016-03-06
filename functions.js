@@ -217,7 +217,7 @@ function getChannelData(ch, data, filtri)
         }
         else
         {
-            def.reject("Impossibile caricare la pagina. Ch=" + ch);
+            def.reject("Impossibile caricare la pagina.\nCanale: " + ch + "\nData: " + data + "\nFiltri: " + JSON.stringify(filtri));
         }
     }
 
