@@ -8,23 +8,19 @@ La grafica è in stile _Material Design_ e la struttura della pagina è principa
 
 ## Layout ##
 
-Sono presenti due tipi di visualizzazioni:
+Il sito offre una "finestra" in cui è disponibile la lista dei canali e per ogni canale la lista dei programmi. Di ogni programma viene mostrato solo titolo, durata e categoria. Cliccando sul programma è possibile conoscere altri dettagli, quali una descrizione, un'immagine e dei link di approfondimento.
 
-* **List** (default): un semplice elenco dei programmi senza immagini e fronzoli: vengono mostrati solo durata, titolo e categoria.
-
-Cliccando su un programma sono mostrati alcuni dettagli in più.
-
-* **Wall**: modalità più _"grafica"_: i programmi vengono elencati in colonna per ogni canale. Ogni programma occupa un'area proporzionale alla sua durata e mostra titolo, ora di inizio e categoria.
-
-Cliccando su un programma si apre un popup con ulteriori dettagli.
+In basso a destra si trova un pulsante per la ricerca.
 
 ## Funzioni ##
 
-In cima alla pagina è presente un form che permette di scegliere il layout da usare ed effettuare delle ricerche. I parametri che è possibile specificare sono:
+Cliccando sull'apposito pulsante (o trascinando da sinistra a destra su dispositivi touch) si apre un menu laterale di ricerca che premtte di specificare dei filtri; in particolare è possibile restringere la ricerca per:
 
-* il giorno in cui il programma deve andare in onda (fino a 7 giorni dopo il giorno attuale)
+* il giorno in cui il programma deve andare in onda (oggi e domani sono "dinamici", ovvero indicando il giorno attuale e quello successivo; sono disponibili anche 7 date "fisse" corrsipondenti ai 7 giorni dopo il giorno attuale)
 
-* il canale (o i canali) su cui va in onda il programma;
+* la fascia oraria in cui il programma deve andare in onda (00-06, 06-12, 12-18, 18-24)
+
+* il canale (o i canali) su cui deve andare in onda il programma;
 
 * un testo contenuto nel titolo;
 
@@ -42,6 +38,6 @@ Il progetto è sotto licenza GPL v3, pertanto può essere modificato, migliorato
 
 Nel caso qualcuno volesse apportare qualche modifica vorrei evidenziare il fatto che in realtà tutta l'applicazione non è altro che un'impalcatura grafica costruita attorno al vero nucleo del progetto: la funzione getChannelData() (file [functions.js](https://github.com/GioBonvi/MyRAI/blob/master/functions.js "File functions.js")).
 
-Questa funzione accetta in input il canale, la data e i filtri di ricerca e restituisce un Array Javascript contenente tutti i dettagli di tutti i programmi risultanti dalla ricerca. Se qualcuno volesse quindi implementare questa idea con un interfaccia grafica diversa (o magari per un'altra piattaforma) basta prendere la funzione e gestirne in maniera differente l'input e l'output.
+Questa funzione accetta in input il canale, la data e i filtri di ricerca e restituisce un Object() Javascript contenente il nome del canale e tutti i dettagli di tutti i programmi risultanti dalla ricerca. Se qualcuno volesse quindi implementare questa idea con un interfaccia grafica diversa (o magari per un'altra piattaforma) basta prendere la funzione e gestirne in maniera differente l'input e l'output.
 
-Ovviamente tutto si basa sul sito ufficiale della RAI: se questo cambiasse l'estrazione delle informazioni potrebbe fallire.
+Ovviamente tutto si basa sul sito ufficiale della RAI: se cambiassero gli indirizzi o il modello dei contenuti l'estrazione delle informazioni potrebbe fallire.
