@@ -47,7 +47,8 @@ $.when.apply(null, channelsPromises).done(function()
                     var now = Math.floor((e - d.setHours(0,0,0,0)) / 60000);
                     var nowData = d.getFullYear() + "_" + ((d.getMonth() + 1 < 10) ? "0" + (d.getMonth() + 1) : (d.getMonth() + 1) ) + "_" + ((d.getDate() < 10) ? "0" + d.getDate() : d.getDate() );
                     // Per essere in onda deve essere giusta sia l'ora che la data.
-                    var inOnda = (nowData == data) && (prg.inizio <= now && prg.fine > now);
+                    var inOnda = (nowData == window.data) && (prg.inizio <= now && prg.fine > now);
+                    console.log(nowData + " - " + window.data);
                     chBody.append('<div data-n="' + i + '" class="prg' + (inOnda ? ' inonda' : '') + '">' + prgPrev + '</div>');
                 }
                 channel.append(chHeader).append(chBody);
