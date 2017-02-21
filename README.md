@@ -24,7 +24,7 @@ Cliccando sull'apposito pulsante (o trascinando da sinistra a destra su disposit
 
 * un testo contenuto nel titolo;
 
-* un testo (non) contenuto nel titolo;
+* un testo contenuto nella descrizione;
 
 * il macrogenere del programma (è possibile scegliere un numero indefinito di macrogeneri: basta che uno di essi corrisponda)
 
@@ -36,8 +36,4 @@ Se uno dei campi è lasciato vuoto quel parametro viene ignorato (per es: se il 
 
 Il progetto è sotto licenza GPL v3, pertanto può essere modificato, migliorato e ridistribuito da chiunque in ogni sua parte.
 
-Nel caso qualcuno volesse apportare qualche modifica vorrei evidenziare il fatto che in realtà tutta l'applicazione non è altro che un'impalcatura grafica costruita attorno al vero nucleo del progetto: la funzione getChannelData() (file [functions.js](https://github.com/GioBonvi/MyRAI/blob/master/functions.js "File functions.js")).
-
-Questa funzione accetta in input il canale, la data e i filtri di ricerca e restituisce un Object() Javascript contenente il nome del canale e tutti i dettagli di tutti i programmi risultanti dalla ricerca. Se qualcuno volesse quindi implementare questa idea con un interfaccia grafica diversa (o magari per un'altra piattaforma) basta prendere la funzione e gestirne in maniera differente l'input e l'output.
-
-Ovviamente tutto si basa sul sito ufficiale della RAI: se cambiassero gli indirizzi o il modello dei contenuti l'estrazione delle informazioni potrebbe fallire.
+Ovviamente tutto si basa sul sito ufficiale della RAI: se cambiassero gli indirizzi o il modello dei contenuti l'estrazione delle informazioni fallirebbe.

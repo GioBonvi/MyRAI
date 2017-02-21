@@ -32,7 +32,7 @@ body, main {
     flex: 0 0 auto;
     padding: 0.7em;
     margin: 0 0.2em;
-    
+
     color: white;
 }
 
@@ -81,12 +81,12 @@ body, main {
     border: 1em solid black;
     border-radius: 0.5em;
     height: 40em;
-    
+
     display: -moz-flex;
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
-    
+
     -webkit-flex-direction: column;
     -moz-flex-direction: column;
     -ms-flex-direction: column;
@@ -98,12 +98,12 @@ body, main {
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
-        
+
     -webkit-flex: 0 0 6em;
     -mox-flex: 0 0 6em;
     -ms-flex: 0 0 6em;
     flex: 0 0 6em;
-    
+
     overflow-x: auto;
     overflow-y: hidden;
 }
@@ -117,13 +117,23 @@ body, main {
 #list #inner-container {
     width: 100%;
     overflow-y: auto;
+
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+
+    -webkit-flex-direction: column;
+    -moz-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
 }
 
 #list .ch {
     margin: 0.7em;
 }
 
-#list .ch-header {     
+#list .ch-header {
     display: -moz-flex;
     display: -ms-flexbox;
     display: -webkit-flex;
@@ -132,7 +142,7 @@ body, main {
     -ms-align-items: center;
     -moz-align-items: center;
     align-items: center;
-    
+
     margin-bottom: 0.7em;
 }
 
@@ -140,7 +150,7 @@ body, main {
     display: inline;
     height: 75px;
     width: 75px;
-    
+
     margin-right: 0.5em;
 }
 
